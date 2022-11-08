@@ -1,0 +1,49 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Fredoka-Bold.ttf",
+      "sha1": "fa86a99a2d53612202b44c49af9c7a28482480bb"
+    },
+    {
+      "path": "src/assets/fonts/Fredoka-Light.ttf",
+      "sha1": "3d5884d8c7a66e5dd23af456dfe3e5e23b36b3ae"
+    },
+    {
+      "path": "src/assets/fonts/Fredoka-Medium.ttf",
+      "sha1": "563c4f6a77bf54cb04a4242e577f43db19128d2a"
+    },
+    {
+      "path": "src/assets/fonts/Fredoka-Regular.ttf",
+      "sha1": "520ab11425914a594eaf883a7d5bd40fc985f823"
+    },
+    {
+      "path": "src/assets/fonts/Fredoka-SemiBold.ttf",
+      "sha1": "6f3c2527737fcc84e3fdfd4c6437bb52d02072b4"
+    },
+    {
+      "path": "src/assets/fonts/FredokaOne-Regular.ttf",
+      "sha1": "c4377bea37b4f84e6d2183741664025d5cecef3e"
+    },
+    {
+      "path": "src/assets/fonts/Fredoka_Condensed-SemiBold.ttf",
+      "sha1": "e14d8b2a5f4ccbb0cd3d11ee27ccb5acfcec7ff6"
+    },
+    {
+      "path": "src/assets/fonts/NotoSerif-Regular.ttf",
+      "sha1": "3f15509c797a957769316e054c4f7f43ef1d9563"
+    },
+    {
+      "path": "src/assets/fonts/OpenSans-Regular.ttf",
+      "sha1": "9a19a459ca7bca15d2de8269b80411f2b4a71ccf"
+    },
+    {
+      "path": "src/assets/fonts/Poppins-BoldItalic.ttf",
+      "sha1": "6de8952ca08d27ee77f57347d2cef4b4e26aa78f"
+    },
+    {
+      "path": "src/assets/fonts/Poppins-SemiBoldItalic.ttf",
+      "sha1": "0c8bed0a5942b2388d36b11c115685d9f01700b0"
+    }
+  ]
+}
