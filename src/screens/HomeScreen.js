@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View,StatusBar ,TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View,ScrollView, FlatList,StatusBar ,TouchableOpacity,Image,TextInput} from 'react-native'
 import React,{useState} from 'react'
 import { Colors,Images,Fonts ,plants} from '../contants'
-import { Separator } from '../components'
+import { Separator,Card } from '../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const HomeScreen = (navigation) => {
+
+const HomeScreen = ({navigation}) => {
     const [catergoryIndex, setCategoryIndex] = React.useState(0);
 
     const categories = ['POPULAR', 'ORGANIC', 'INDOORS', 'SYNTHETIC'];
@@ -17,11 +18,8 @@ const HomeScreen = (navigation) => {
         <Separator height={40}/>
         <View style= {styles.header}>
             <View style= {styles.titleContain}>
-                <Ionicons
-                    name='person-circle-outline'
-                    size={40}
-                />
-                <Text style= {styles.title}>Welcome</Text>
+                <Image source={Images.AvatarImage} style= {styles.Image}/>
+                <Text style= {styles.title}>Nga</Text>
                 <Feather name='bell' size={32} style = {{position:'absolute', right:55}}/>
                 <Feather name='shopping-cart' size={32} style = {{position:'absolute', right:10}}/>
                 <View style= {styles.alert}>
@@ -34,7 +32,10 @@ const HomeScreen = (navigation) => {
             <View style={styles.SearchContain}>
                 <View style = {styles.search}>
                     <Ionicons name='search' size={30} color= {Colors.THIRD_GREEN}/>
-                    <Text style= {styles.searchText}>Search</Text>
+                    <TextInput 
+                        placeholder='Search ' 
+                        placeholderTextColor={Colors.THIRD_GREEN}
+                        style= {styles.SearchTextInput}/>
                 </View>
             </View>
             <View style={styles.categoryContainer}>
@@ -53,10 +54,19 @@ const HomeScreen = (navigation) => {
                     </TouchableOpacity>
                 ))}
             </View>
-
-            <View>
-                
-            </View>
+        
+            <FlatList
+                marginHorizontal = {15}
+                columnWrapperStyle={{justifyContent: 'space-between'}}
+                showsVerticalScrollIndicator={true}
+                numColumns={2}
+                data={plants}
+                renderItem={({item}) => {
+                  return <Card plant={item} navigation = {navigation} />;
+                }}
+                >
+            </FlatList>
+            
         </View>
     </View>
   )
@@ -67,6 +77,7 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        // display: 'flex',
         backgroundColor: Colors.DEFAULT_WHITE,
     },
     header:{
@@ -79,10 +90,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         
     },
+    Image:{
+        height: 60,
+        width: 60,  
+        borderRadius: 100
+    },
     title: {
         fontSize:35,
         color: Colors.THIRD_GREEN,
-        fontFamily: Fonts.FREDOKA_BOLD,
+        fontFamily: Fonts.FREDOKA_REGULAR,
+        fontWeight: 'bold',
+        marginLeft: 10
         // marginTop:50,
     },
     alert:{
@@ -126,16 +144,16 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10
     },
-    searchText:{
+    SearchTextInput:{
         fontSize: 20,
+        textAlignVertical: 'center',
+        paddingHorizontal:10,
         fontFamily: Fonts.NOTO_REGULAR,
-        fontWeight: '600',
-        color: Colors.THIRD_GREEN,
-        marginLeft: 10
+        maxWidth: 250,
     },
     categoryContainer: {
         flexDirection: 'row',
-        marginTop: 30,
+        marginTop: 20,
         marginBottom: 20,
         marginLeft: 15,
         marginRight: 15,
@@ -151,4 +169,8 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         borderBottomWidth: 2,
     },
+    ScrollView: {
+        marginHorizontal: 15
+    },
+    
 })

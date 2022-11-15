@@ -13,6 +13,7 @@ export default {
     THIRD_LIGHT_GREEN: '#C1DFCC',
     THIRD_WHITE: '#E5F0EA',
     THIRD_GREY: '#A0A0A0',
+    THIRD_RED:  '#F52A2A',
     LIGHT_GREEN: '#CEE8E7',
     LIGHT_GREY: '#F8F7F7',
     LIGHT_GREY2: '#EAEAEA',
