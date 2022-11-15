@@ -1,9 +1,7 @@
-import { StyleSheet,Image,ImageBackground , Text, View,StatusBar,TextInput ,TouchableOpacity} from 'react-native'
+import { StyleSheet,Image , Text, View,StatusBar,TextInput ,TouchableOpacity} from 'react-native'
 import React ,{useState} from 'react'
 import { Colors ,Images,Fonts} from "../contants"
 import { Separator } from '../components'
-import { Icon } from "@rneui/themed";
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 
 const SignInScreeen = ({navigation}) => {
