@@ -6,8 +6,12 @@ export default {
     FREDOKA_SEMIBOLD: 'Fredoka-SemiBold',
     FREDOKAONE_REGULAR: 'FredokaOne-Regular',
     POPPINS_BOLDITALIC: 'Poppins-BoldItalic',
+    POPPINS_LIGHT : 'Poppins-Light',
+    POPPINS_MEDIUM : 'Poppins-Medium',
+    POPPINS_REGULAR : 'Poppins-Regular',
+    POPPINS_BOLD : 'Poppins-Bold',
     POPPINS_SEMIBOLDITALIC: 'Poppins-SemiBoldItalic',
     FREDOKA_CONDENSED_SEMIBOLD: 'Fredoka_Condensed-SemiBold',
     NOTO_REGULAR: 'NotoSerif-Regular',
-    OPENSANS_REGULAR: 'OpenSans-Regular'
-    };
+    OPENSANS_REGULAR: 'OpenSans-Regular',
+};
