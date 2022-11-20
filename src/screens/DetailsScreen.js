@@ -13,11 +13,11 @@ const DetailsScreen = ({navigation,route}) => {
             <StatusBar barStyle='light-content' backgroundColor={Colors.THIRD_LIGHT_GREEN} translucent/>
             <View style = {styles.header}>
                 <Ionicons 
-                    name='caret-back-circle-outline' 
-                    size={40} 
+                    name='chevron-back' 
+                    size={35} 
+                    style = {{color: Colors.THIRD_GREEN}}
                     onPress={() => navigation.goBack()}/>
                 
-                <Ionicons name='cart' size={40}/>
             </View>
             <View style = {styles.imageContain}>
                 <Image source={plant.img} style = {styles.image}/>
@@ -58,13 +58,10 @@ const DetailsScreen = ({navigation,route}) => {
                         }}>{plant.about}</Text>
                 </View>
                 
-                <View style = {styles.buy}>
-                    <View style = {styles.icon}>
-                        <Feather name='shopping-bag' size={30}/>
-                    </View>
-                    
+                <View style = {styles.buy}>          
                     <TouchableOpacity style = {styles.BuyNow}>
-                        <Text style= {{fontSize : 20 , color: Colors.DEFAULT_WHITE, fontFamily: Fonts.OPENSANS_REGULAR, fontWeight: 'bold'}}>BUY NOW</Text>
+                        <Feather name='shopping-cart' size={30} style = {{color: Colors.DEFAULT_WHITE}} />
+                        <Text style= {{ marginHorizontal: 15,fontSize : 22 , color: Colors.DEFAULT_WHITE, fontFamily: Fonts.OPENSANS_REGULAR, fontWeight: 'bold'}}>Add to Cart</Text>
                     </TouchableOpacity>
                 </View>
                 
@@ -77,10 +74,7 @@ const DetailsScreen = ({navigation,route}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
       backgroundColor: Colors.THIRD_LIGHT_GREEN,
-    //   paddingBottom: 70,
       paddingTop: 70
     },
     header:{
@@ -91,7 +85,6 @@ const styles = StyleSheet.create({
     imageContain:{
         flex: 0.45,
         alignItems: 'center',
-        // backgroundColor: Colors.THIRD_LIGHT_GREEN
     },
     image:{
         flex: 1,
@@ -101,7 +94,6 @@ const styles = StyleSheet.create({
         flex: 0.60,
         backgroundColor: Colors.DEFAULT_WHITE,
         marginHorizontal: 2,
-        // marginBottom: 7,
         borderRadius: 20,
         marginTop: 15,
         paddingTop: 10,
@@ -121,7 +113,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         flexDirection: 'column',
         alignItems: 'flex-start',
-        // backgroundColor: Colors.THIRD_LIGHT_GREEN,
     },
     textName:{
         fontFamily: Fonts.FREDOKA_REGULAR,
@@ -140,8 +131,6 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     buy:{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 30,
         marginTop: 20,
@@ -157,21 +146,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         marginTop: 40,
     },
-    icon:{
-        height: 50,
-        width: 50,
-        backgroundColor: Colors.THIRD_LIGHT_GREEN,
-        alignItems: 'center',
-        paddingTop: 10,
-        borderRadius: 100
-    },
     BuyNow:{
-        borderRadius: 25,
+        borderRadius: 35,
+        flexDirection: 'row',
         height: 50,
-        width: 270,
-        alignItems: 'center',
+        width: 350,
+        justifyContent: 'center',
         backgroundColor: Colors.THIRD_GREEN,
-        paddingTop: 10
+        paddingVertical: 10
     }
 })
 export default DetailsScreen;

@@ -16,14 +16,13 @@ const Card = ({plant,navigation}) => {
             />
           </View>
 
-          <Text style={styles.plantName}>
-            {plant.name}
-          </Text>
           <View style={styles.price}>
+            <Text style={styles.plantName}>
+              {plant.name}
+            </Text>
             <Text style={styles.textprice}>
               ${plant.price}
             </Text>
-            <Ionicons name='cart' size={25} color = {Colors.THIRD_GREY} />
           </View>
         </View>
       </TouchableOpacity>
@@ -32,31 +31,32 @@ const Card = ({plant,navigation}) => {
 const styles = StyleSheet.create({
     card: {
         height: 225,
-        backgroundColor: Colors.THIRD_LIGHT_GREEN,
+        backgroundColor: Colors.THIRD_WHITE,
         width: 180,
         marginHorizontal: 2,
-        borderRadius: 10,
+        borderRadius: 15,
         marginBottom: 20,
-        padding: 15,
     },
     cardImage:{
-        height: 120,
+        height: 150,
         alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: Colors.THIRD_LIGHT_GREEN
     },
     plantName:{
-        fontFamily: Fonts.FREDOKA_REGULAR,
+        fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
         fontWeight: 'bold', 
         fontSize: 20, 
-        marginTop: 10
     },
     price:{
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
-        marginTop: 5,
+        marginVertical: 10,
+        marginHorizontal: 15
     },
     textprice:{
-        fontFamily: Fonts.FREDOKA_REGULAR,
+        fontFamily: Fonts.POPPINS_BOLD,
         color: Colors.THIRD_GREEN,
         fontSize: 20, 
         fontWeight: 'bold',

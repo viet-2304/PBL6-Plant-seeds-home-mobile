@@ -58,7 +58,7 @@ const SignInScreeen = ({navigation}) => {
         
         <View flex = {1}>
           <TouchableOpacity style= {styles.btLogIn}
-          onPress= {()=> navigation.navigate('Home')}>
+          onPress= {()=> navigation.navigate('HomeTab')}>
             <Text style= {styles.textLogIn}>Login</Text>
           </TouchableOpacity>
           <View style={styles.signupContainer}>
