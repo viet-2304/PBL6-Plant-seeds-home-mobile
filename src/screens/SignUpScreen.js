@@ -16,10 +16,10 @@ const SignUpScreen = ({navigation}) => {
           <View style = {styles.header}>
             <Image source={Images.SignUpImage} style= {styles.image}/>
             <Ionicons 
-              name='caret-back-circle-outline' 
-              size={40} 
-              style= {styles.icon}
-              onPress={() => navigation.goBack()}/>
+                    name='chevron-back' 
+                    size={35} 
+                    style = {styles.icon}
+                    onPress={() => navigation.goBack()}/>
           </View>
         
         <View style = {styles.Content}>
@@ -87,7 +87,7 @@ const SignUpScreen = ({navigation}) => {
                 />
             </View>
           </View>
-          <TouchableOpacity style= {styles.btLogIn}>
+          <TouchableOpacity style= {styles.btLogIn} onPress = {()=> navigation.navigate('SignIn')}>
             <Text style= {styles.textLogIn}>Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     position:'relative',
   },
   icon:{
-    marginTop: 100,
+    marginTop: 120,
     marginLeft: 20,
     color: Colors.THIRD_GREEN,
     position:'absolute',

@@ -18,23 +18,17 @@ const HomeScreen = ({navigation}) => {
         <Separator height={40}/>
         <View style= {styles.header}>
             <View style= {styles.titleContain}>
-                <Image source={Images.AvatarImage} style= {styles.Image}/>
-                <Text style= {styles.title}>Nga</Text>
-                <Feather name='bell' size={32} style = {{position:'absolute', right:55}}/>
-                <Feather name='shopping-cart' size={32} style = {{position:'absolute', right:10}}/>
-                <View style= {styles.alert}>
-                    <Text>10</Text>
-                </View>
-                <View style = {styles.cart}>
-                    <Text>5</Text>
-                </View>
+                <Image source={Images.Logo_home} style= {styles.Image}/>
+                <Ionicons name='notifications-outline' size={32} style = {{position:'absolute', right:10, color: Colors.THIRD_GREEN}}/>
+                
             </View>
-            <View style={styles.SearchContain}>
-                <View style = {styles.search}>
+            <View style={styles.search}>
+                <View style = {styles.SearchContain}>
                     <Ionicons name='search' size={30} color= {Colors.THIRD_GREEN}/>
                     <TextInput 
-                        placeholder='Search ' 
+                        placeholder='Search' 
                         placeholderTextColor={Colors.THIRD_GREEN}
+                        alignItems = 'center'
                         style= {styles.SearchTextInput}/>
                 </View>
             </View>
@@ -77,7 +71,6 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // display: 'flex',
         backgroundColor: Colors.DEFAULT_WHITE,
     },
     header:{
@@ -87,21 +80,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 15,
-        marginHorizontal: 10,
-        
+        marginHorizontal: 10,   
     },
     Image:{
         height: 60,
         width: 60,  
-        borderRadius: 100
-    },
-    title: {
-        fontSize:35,
-        color: Colors.THIRD_GREEN,
-        fontFamily: Fonts.FREDOKA_REGULAR,
-        fontWeight: 'bold',
-        marginLeft: 10
-        // marginTop:50,
+        // borderRadius: 100
     },
     alert:{
         backgroundColor: Colors.DEFAULT_YELLOW,
@@ -125,35 +109,32 @@ const styles = StyleSheet.create({
         right: 45,
         top: -2,
     },
+    search:{
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        marginTop: 15,
+    },
     SearchContain:{
         backgroundColor: Colors.DEFAULT_WHITE,
         height: 45,
+        width: 370,
         borderRadius: 32,
         borderWidth: 1,
         borderColor: Colors.THIRD_GREEN,
-        marginLeft: 15,
-        marginRight: 15,
-        marginTop: 20,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    search:{
+        marginHorizontal: 10,
+        paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: 10,
-        marginRight: 10
     },
     SearchTextInput:{
-        fontSize: 20,
-        textAlignVertical: 'center',
-        paddingHorizontal:10,
-        fontFamily: Fonts.NOTO_REGULAR,
-        maxWidth: 250,
+        fontSize: 22,
+        fontWeight: 'bold',
+        fontFamily: Fonts.POPPINS_LIGHT,
+        color: Colors.THIRD_GREEN,
     },
     categoryContainer: {
         flexDirection: 'row',
-        marginTop: 20,
+        marginTop: 15,
         marginBottom: 20,
         marginLeft: 15,
         marginRight: 15,
@@ -163,14 +144,12 @@ const styles = StyleSheet.create({
         fontSize: 18, 
         color: Colors.THIRD_GREY,
         fontWeight: 'bold',
+        fontFamily: Fonts.POPPINS_MEDIUM
     },
     categoryTextSelected: {
         color: Colors.THIRD_GREEN,
         paddingBottom: 5,
         borderBottomWidth: 2,
-    },
-    ScrollView: {
-        marginHorizontal: 15
     },
     
 })
