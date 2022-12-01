@@ -40,11 +40,11 @@ const AccountScreen = ({navigation})=> {
                     <Ionicons name='chevron-forward-outline' size={25} style={{color: Colors.DEFAULT_BLACK, right: 0 ,position:'absolute'}}/>
                 </View>
 
-                <View style= {styles.element}>
+                {/* <View style= {styles.element}>
                     <Ionicons name='card-outline' size={30} style={{color: Colors.DEFAULT_BLACK}}/>
                     <Text style={styles.funtionText}>Orders</Text>
                     <Ionicons name='chevron-forward-outline' size={25} style={{color: Colors.DEFAULT_BLACK, right: 0 ,position:'absolute'}}/>
-                </View>
+                </View> */}
                 <View style= {styles.element}>
                     <TouchableOpacity 
                         style = {{
