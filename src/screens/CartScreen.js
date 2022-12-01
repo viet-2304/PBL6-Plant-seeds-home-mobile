@@ -17,9 +17,9 @@ const CartScreen = ({navigation,route}) =>{
                 
                 <Text 
                     style = {{
-                        fontFamily: Fonts.POPPINS_BOLD,
+                        fontFamily: Fonts.POPPINS_MEDIUM,
                         fontSize: 24,
-                        // fontWeight: '700',
+                        fontWeight: '500',
                         color: Colors.THIRD_GREEN,
                         alignItems: 'center',
                         marginLeft: 100
@@ -150,7 +150,7 @@ const CartScreen = ({navigation,route}) =>{
                         marginHorizontal: 15,
                         fontSize : 22 , 
                         color: Colors.DEFAULT_WHITE, 
-                        fontFamily: Fonts.OPENSANS_REGULAR, 
+                        fontFamily: Fonts.POPPINS_MEDIUM, 
                         fontWeight: 'bold'
                     }}>Payment</Text>
                 </TouchableOpacity>

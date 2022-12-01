@@ -10,6 +10,7 @@ import SignUpScreen from './src/screens/SignUpScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
 import AccountScreen from './src/screens/AccountScreen';
+import EditProfileScreen from './src/screens/EditProfileScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from '@rneui/base';
 import CartScreen from './src/screens/CartScreen';
@@ -65,6 +66,7 @@ function App() {
         <Stack.Screen name="Detail" component={DetailsScreen} />
         <Stack.Screen name="AccountTab" component={MyTab} />
         <Stack.Screen name="CartTab" component={MyTab} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

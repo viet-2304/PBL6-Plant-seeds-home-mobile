@@ -29,9 +29,14 @@ const AccountScreen = ({navigation})=> {
 
             <View style = {styles.funtion}>
                 <View style= {styles.element}>
-                    <Ionicons name='create-outline' size={30} style={{color: Colors.DEFAULT_BLACK}}/>
-                    <Text style={styles.funtionText}>Edit Profile</Text>
-                    <Ionicons name='chevron-forward-outline' size={25} style={{color: Colors.DEFAULT_BLACK, right: 0 ,position:'absolute'}}/>
+                    <TouchableOpacity style = {{
+                            flexDirection: 'row',}}
+                        onPress = {()=> navigation.navigate('EditProfile')}>
+                        <Ionicons name='create-outline' size={30} style={{color: Colors.DEFAULT_BLACK}}/>
+                        <Text style={styles.funtionText}>Edit Profile</Text>
+                        
+                    </TouchableOpacity>
+                    
                 </View>
 
                 <View style= {styles.element}>
