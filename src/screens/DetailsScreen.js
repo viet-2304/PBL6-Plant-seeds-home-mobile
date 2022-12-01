@@ -59,7 +59,8 @@ const DetailsScreen = ({navigation,route}) => {
                 </View>
                 
                 <View style = {styles.buy}>          
-                    <TouchableOpacity style = {styles.BuyNow}>
+                    <TouchableOpacity style = {styles.BuyNow} 
+                        onPress={() => navigation.navigate('Cart',plant)}>
                         <Feather name='shopping-cart' size={30} style = {{color: Colors.DEFAULT_WHITE}} />
                         <Text style= {{ marginHorizontal: 15,fontSize : 22 , color: Colors.DEFAULT_WHITE, fontFamily: Fonts.OPENSANS_REGULAR, fontWeight: 'bold'}}>Add to Cart</Text>
                     </TouchableOpacity>

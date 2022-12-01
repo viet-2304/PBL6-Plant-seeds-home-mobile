@@ -12,6 +12,7 @@ import DetailsScreen from './src/screens/DetailsScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from '@rneui/base';
+import CartScreen from './src/screens/CartScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,9 +35,14 @@ function MyTab() {
             <Ionicons name='home' size={25} color={color} />
           )
         }} />
-        <Tab.Screen name = 'Cart' component={HomeScreen} options= {{
+        <Tab.Screen name = 'Cart' component={CartScreen} options= {{
           tabBarIcon: ({color})=>(
             <Ionicons name='cart' size={25} color={color} />
+          )
+        }} />
+        <Tab.Screen name = 'Orders' component={HomeScreen} options= {{
+          tabBarIcon: ({color})=>(
+            <Ionicons name='card' size={25} color={color} />
           )
         }} />
         <Tab.Screen name = 'Profile' component={AccountScreen} options= {{
@@ -58,6 +64,7 @@ function App() {
         <Stack.Screen name="HomeTab" component={MyTab} />
         <Stack.Screen name="Detail" component={DetailsScreen} />
         <Stack.Screen name="AccountTab" component={MyTab} />
+        <Stack.Screen name="CartTab" component={MyTab} />
       </Stack.Navigator>
     </NavigationContainer>
   );
