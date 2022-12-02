@@ -11,6 +11,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import EditProfileScreen from './src/screens/EditProfileScreen';
+import ChangePassScreen from './src/screens/ChangePassScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from '@rneui/base';
 import CartScreen from './src/screens/CartScreen';
@@ -67,6 +68,7 @@ function App() {
         <Stack.Screen name="AccountTab" component={MyTab} />
         <Stack.Screen name="CartTab" component={MyTab} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        <Stack.Screen name="ChangePass" component={ChangePassScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -25,19 +25,18 @@ const SignInScreeen = ({navigation}) => {
                     alignItems: 'center',
                     marginLeft: 15
                 }}
-            >Edit Profile</Text>     
+            >Change Password</Text>     
         </View>
         
-        <View style={{height:'90%',width: '100%'}}>
-            <ScrollView >
-                <TextInput placeholder='Email dont edit' style ={styles.textInput} editable = {false}/>
-                <TextInput placeholder='Username' style ={styles.textInput}/>
-                <TextInput placeholder='Gender' style ={styles.textInput}/>
-                <TextInput placeholder='Birthday' style ={styles.textInput}/>
-                <TextInput placeholder='Address' style ={styles.textInput}/>
-                <TextInput placeholder='Phone' style ={styles.textInput}/>
-            </ScrollView>
-            <View style = {{flex:1,position: 'relative'}}>
+        <View style={{width: '100%'}}>
+            
+            <TextInput placeholder='Current Password' style ={styles.textInput} />
+            <TextInput placeholder='New Password' style ={styles.textInput}/>
+            <TextInput placeholder='Re-enter New Password' style ={styles.textInput}/>
+            
+        </View>
+        
+        <View style = {{flex:1,position: 'relative', marginTop: 50 }}>
                 <TouchableOpacity style = {styles.BtUpdate}>
                     <Text style = {{
                         fontSize : 22 , 
@@ -47,8 +46,6 @@ const SignInScreeen = ({navigation}) => {
                     }}>Save</Text>
                 </TouchableOpacity>
             </View>
-        </View>
-        
     </View>
   )
 }
@@ -58,10 +55,11 @@ export default SignInScreeen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // width: '100%',
-        // height: '100%',
+        width: '100%',
+        height: '100%',
         backgroundColor: Colors.DEFAULT_WHITE,
         paddingTop: 70,
+        position: 'absolute'
     },
     header:{
         flexDirection: 'row',
