@@ -15,7 +15,7 @@ const AccountScreen = ({navigation})=> {
                 <Ionicons 
                     name='chevron-back' 
                     size={35} 
-                    style = {{color: Colors.DEFAULT_BLACK}}
+                    style = {{color: Colors.THIRD_GREEN}}
                     onPress={() => navigation.navigate('Home')}/>       
                 <Text style = {styles.text}>Profile</Text>
             </View>
@@ -32,17 +32,20 @@ const AccountScreen = ({navigation})=> {
                     <TouchableOpacity style = {{
                             flexDirection: 'row',}}
                         onPress = {()=> navigation.navigate('EditProfile')}>
-                        <Ionicons name='create-outline' size={30} style={{color: Colors.DEFAULT_BLACK}}/>
-                        <Text style={styles.funtionText}>Edit Profile</Text>
-                        
+                        <Ionicons name='create-outline' size={30} style={{color: Colors.THIRD_GREEN}}/>
+                        <Text style={styles.funtionText}>Edit Profile</Text>    
                     </TouchableOpacity>
                     
                 </View>
 
                 <View style= {styles.element}>
-                    <Ionicons name='key-outline' size={30} style={{color: Colors.DEFAULT_BLACK}}/>
-                    <Text style={styles.funtionText}>Change Password</Text>
-                    <Ionicons name='chevron-forward-outline' size={25} style={{color: Colors.DEFAULT_BLACK, right: 0 ,position:'absolute'}}/>
+                    
+                    <TouchableOpacity style = {{
+                            flexDirection: 'row',}}
+                        onPress = {()=> navigation.navigate('ChangePass')}>
+                        <Ionicons name='key-outline' size={30} style={{color: Colors.THIRD_GREEN}}/>
+                        <Text style={styles.funtionText}>Change Password</Text>    
+                    </TouchableOpacity>
                 </View>
 
                 {/* <View style= {styles.element}>
@@ -94,9 +97,9 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 26,
         marginHorizontal: 5,
-        fontFamily: Fonts.POPPINS_REGULAR,
+        fontFamily: Fonts.POPPINS_MEDIUM,
         fontWeight: 'bold',
-        color: Colors.DEFAULT_BLACK
+        color: Colors.THIRD_GREEN
     },
     Avatar:{
         alignItems: 'center',
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_REGULAR,
         fontSize: 28,
         fontWeight:'bold',
-        color: Colors.DEFAULT_BLACK,
+        color: Colors.THIRD_GREEN,
         marginTop: 10,
     },
     line: {
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_MEDIUM,
         fontWeight: '500',
         fontSize: 20,
-        color: Colors.DEFAULT_BLACK,
+        color: Colors.THIRD_GREEN,
         marginHorizontal: 15
     },
 
