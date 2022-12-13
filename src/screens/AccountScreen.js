@@ -8,16 +8,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 const AccountScreen = ({navigation})=> {
     return(
         <View style = {styles.container}>
-            <StatusBar barStyle='light-content' 
-                backgroundColor={Colors.THIRD_LIGHT_GREEN} translucent/>
-            <Separator height={40}/>  
-            <View style= {styles.titleContain}>
+            <View style = {styles.header}>
                 <Ionicons 
                     name='chevron-back' 
                     size={35} 
                     style = {{color: Colors.THIRD_GREEN}}
-                    onPress={() => navigation.navigate('Home')}/>       
-                <Text style = {styles.text}>Profile</Text>
+                    onPress={() => navigation.navigate('Home')}/> 
+                
+                <Text 
+                    style = {{
+                        fontFamily: Fonts.POPPINS_MEDIUM,
+                        fontSize: 26,
+                        fontWeight: '500',
+                        color: Colors.THIRD_GREEN,
+                        alignItems: 'center',
+                        marginLeft: 15
+                    }}
+                >Profile</Text>     
             </View>
             <View style = {styles.Avatar}>
                 <Image source={Images.AvatarImage} style= {styles.ImageAvatar}/>
@@ -58,8 +65,8 @@ const AccountScreen = ({navigation})=> {
                         style = {{
                             flexDirection: 'row',}}
                         onPress = {()=> navigation.navigate('SignIn')}>
-
-                        <Ionicons name='exit-outline' size={30} style={{color: Colors.DEFAULT_RED}}/>
+                        <Feather name='log-out' size={30} style={{color: Colors.DEFAULT_RED}}/>
+                        {/* <Ionicons name='exit-outline' size={30} style={{color: Colors.DEFAULT_RED}}/> */}
                         <Text 
                             style={{
                                 fontFamily: Fonts.POPPINS_MEDIUM,
@@ -81,13 +88,17 @@ const AccountScreen = ({navigation})=> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: '100%',
+        height: '100%',
         backgroundColor: Colors.DEFAULT_WHITE,
+        paddingTop: 70,
+        position: 'absolute'
     },
-    titleContain:{
+    header:{
         flexDirection: 'row',
+        marginHorizontal: 15,
         alignItems: 'center',
-        marginTop: 15,
-        marginHorizontal: 10,    
+        marginBottom: 20
     },
     Image:{
         height: 60,
@@ -95,15 +106,16 @@ const styles = StyleSheet.create({
         // borderRadius: 100
     },
     text:{
-        fontSize: 26,
-        marginHorizontal: 5,
         fontFamily: Fonts.POPPINS_MEDIUM,
-        fontWeight: 'bold',
-        color: Colors.THIRD_GREEN
+        fontSize: 26,
+        fontWeight: '500',
+        color: Colors.THIRD_GREEN,
+        alignItems: 'center',
+        marginLeft: 15
     },
     Avatar:{
         alignItems: 'center',
-        marginTop: 25,
+        marginTop: 10,
         flexDirection: 'column'
     },
     ImageAvatar:{

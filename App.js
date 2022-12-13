@@ -12,9 +12,13 @@ import DetailsScreen from './src/screens/DetailsScreen';
 import AccountScreen from './src/screens/AccountScreen';
 import EditProfileScreen from './src/screens/EditProfileScreen';
 import ChangePassScreen from './src/screens/ChangePassScreen';
+import ForgotPassScreen from './src/screens/ForgotPassScreen';
+import CheckOutScreen from './src/screens/CheckOutScreen';
+import OrderScreen from './src/screens/OrderScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from '@rneui/base';
 import CartScreen from './src/screens/CartScreen';
+import OrderItemScreen from './src/screens/OrderItemScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +46,7 @@ function MyTab() {
             <Ionicons name='cart' size={25} color={color} />
           )
         }} />
-        <Tab.Screen name = 'Orders' component={HomeScreen} options= {{
+        <Tab.Screen name = 'Orders' component={OrderScreen} options= {{
           tabBarIcon: ({color})=>(
             <Ionicons name='card' size={25} color={color} />
           )
@@ -69,6 +73,10 @@ function App() {
         <Stack.Screen name="CartTab" component={MyTab} />
         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         <Stack.Screen name="ChangePass" component={ChangePassScreen} />
+        <Stack.Screen name="ForgotPass" component={ForgotPassScreen} />
+        <Stack.Screen name="CheckOut" component={CheckOutScreen} />
+        <Stack.Screen name="OrderTab" component={MyTab} />
+        <Stack.Screen name="OrderDetail" component={OrderItemScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

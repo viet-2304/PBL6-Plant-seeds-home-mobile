@@ -1,32 +1,50 @@
-import React from "react";
-import { View, Text, StatusBar, Image,StyleSheet,TouchableOpacity ,FlatList,ScrollView} from 'react-native'
+import { StyleSheet,KeyboardAvoidingView,Image , Text, View,StatusBar,TextInput ,TouchableOpacity,ScrollView} from 'react-native'
+import React ,{useState} from 'react'
 import { Colors ,Images,Fonts} from "../contants"
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Separator } from '../components'
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const CartScreen = ({navigation,route}) =>{
+const CheckOutScreen = ({navigation,route}) => {
     const plants = route.params;
-    return(
-        <View style = {styles.container}>
-            <View style = {styles.header}>
-                <Ionicons 
-                    name='chevron-back' 
-                    size={35} 
-                    style = {{color: Colors.THIRD_GREEN}}
-                    onPress={() => navigation.navigate('Home')}/>
-                
-                <Text 
-                    style = {{
-                        fontFamily: Fonts.POPPINS_MEDIUM,
-                        fontSize: 26,
-                        fontWeight: '500',
-                        color: Colors.THIRD_GREEN,
-                        alignItems: 'center',
-                        marginLeft: 15
-                    }}
-                >My Cart</Text>     
-            </View>
-            <View style = {{height: '65%'}}>
+  return (
+    <View style = {styles.container}>
+        <View style = {styles.header}>
+            <Ionicons 
+                name='chevron-back' 
+                size={35} 
+                style = {{color: Colors.THIRD_GREEN}}
+                onPress={() => navigation.goBack()}/>
+            
+            <Text 
+                style = {{
+                    fontFamily: Fonts.POPPINS_MEDIUM,
+                    fontSize: 24,
+                    fontWeight: '500',
+                    color: Colors.THIRD_GREEN,
+                    alignItems: 'center',
+                    marginLeft: 15
+                }}
+            >Check Out</Text>     
+        </View>
+        <View style = {{backgroundColor: Colors.DEFAULT_WHITE, paddingHorizontal: 20}}>
+            <Text style={{
+                fontSize: 20,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '300',
+                color: Colors.THIRD_GREEN
+            }}>Delivery Address</Text>
+            <TextInput placeholder='Address' style = {styles.address}/>
+        </View>
+        
+        <Text style={{
+            marginHorizontal:20,
+            fontSize: 20,
+            fontFamily: Fonts.POPPINS_MEDIUM,
+            fontWeight: '300',
+            color: Colors.THIRD_GREEN
+        }}>Order List</Text>
+        <View style = {{height: '35%'}}>
                 <ScrollView style={styles.card}>
                     <View style={styles.cardItem}>
                         <View style={styles.cardImage}>
@@ -41,12 +59,9 @@ const CartScreen = ({navigation,route}) =>{
                                         {plants.name}
                                 </Text>
                                 
-                                <Ionicons name="trash" size={24} 
-                                    style={{color: Colors.THIRD_GREEN }}
-                                />
                             </View>
-                            <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-around',alignItems:'center'}}>
-                                <Ionicons name="remove"size={24} style={{color: Colors.THIRD_GREEN}}/>
+                            <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-between',alignItems:'center'}}>
+                                
                                 <Text 
                                     style={{
                                         fontSize: 20,
@@ -57,61 +72,52 @@ const CartScreen = ({navigation,route}) =>{
                                         paddingHorizontal: 8
                                     }}
                                     >1
-                                </Text>
-                                <Ionicons name="add"size={24}style={{color: Colors.THIRD_GREEN}}/>
-                                <Text style={styles.textprice}>
-                                    ${plants.price}
-                                </Text>
-                            </View>
-                        </View>    
-                    </View>
-
-                    <View style={styles.cardItem}>
-                        <View style={styles.cardImage}>
-                            <Image
-                                source={plants.img}
-                                style={{flex: 1, resizeMode: 'contain'}}
-                            />
-                        </View>
-                        <View style = {{width: '70%',flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row',justifyContent: 'space-between', marginVertical: 10}}>
-                                <Text style={styles.plantName}>
-                                        {plants.name}
                                 </Text>
                                 
-                                <Ionicons name="trash" size={24} 
-                                    style={{color: Colors.THIRD_GREEN }}
-                                />
-                            </View>
-                            <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-around',alignItems:'center'}}>
-                                <Ionicons name="remove"size={24} style={{color: Colors.THIRD_GREEN}}/>
-                                <Text 
-                                    style={{
-                                        fontSize: 20,
-                                        color: Colors.THIRD_GREEN,
-                                        borderWidth: 1.5,
-                                        borderColor: Colors.THIRD_GREEN,
-                                        borderRadius: 8,
-                                        paddingHorizontal: 8
-                                    }}
-                                    >1
-                                </Text>
-                                <Ionicons name="add"size={24}style={{color: Colors.THIRD_GREEN}}/>
                                 <Text style={styles.textprice}>
                                     ${plants.price}
                                 </Text>
                             </View>
                         </View>    
                     </View>
-
-
-                    
                 </ScrollView>
-            </View>
-            <View style={styles.total}>
+        </View>
+        
+
+        <Text style={{
+                marginHorizontal:20,
+                marginTop: 5,
+                fontSize: 20,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '300',
+                color: Colors.THIRD_GREEN
+            }}>Payment Method</Text>
+
+        <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginHorizontal: 20,
+            // borderWidth: 1,
+            // borderColor: Colors.THIRD_GREEN,
+            borderRadius: 10,
+            paddingHorizontal: 15,
+            paddingVertical: 8,
+            alignItems: 'center',
+            backgroundColor: Colors.THIRD_WHITE,
+        }}> 
+            <Text style={{
+                fontSize: 20,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '300',
+                color: Colors.THIRD_GREEN
+            }}>By cash</Text>
+            <Ionicons name='chevron-forward-outline' size={25} style={{color: Colors.THIRD_GREEN}}/>
+        </View>
+
+        <View style={styles.total}>
                 <View style = {{flexDirection: 'row',justifyContent: 'space-between',}}>
                     <Text style= {{
-                        fontSize: 22,
+                        fontSize: 20,
                         fontFamily: Fonts.POPPINS_REGULAR,
                         color: Colors.THIRD_GREEN
                     }}>Subtotal</Text>
@@ -122,7 +128,7 @@ const CartScreen = ({navigation,route}) =>{
                 
                 <View style = {{flexDirection: 'row',justifyContent: 'space-between',}}>
                     <Text style= {{
-                            fontSize: 22,
+                            fontSize: 20,
                             fontFamily: Fonts.POPPINS_REGULAR,
                             color: Colors.THIRD_GREEN
                         }}>Shipping cost</Text>
@@ -133,11 +139,13 @@ const CartScreen = ({navigation,route}) =>{
                 <View style = {{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        marginTop: 20,
+                        marginTop: 5,
                         alignItems: 'center',
+                        borderTopWidth: 1,
+                        borderTopColor: Colors.THIRD_GREEN
                     }}>
                     <Text style= {{
-                            fontSize: 24,
+                            fontSize: 20,
                             fontFamily: Fonts.POPPINS_MEDIUM,
                             color: Colors.THIRD_GREEN,
                             fontWeight: '500',
@@ -148,32 +156,46 @@ const CartScreen = ({navigation,route}) =>{
                 <TouchableOpacity style = {styles.order} onPress= {()=> navigation.navigate('CheckOut',plants)}>     
                     <Text style= {{ 
                         marginHorizontal: 15,
-                        fontSize : 22 , 
+                        fontSize : 20 , 
                         color: Colors.DEFAULT_WHITE, 
                         fontFamily: Fonts.POPPINS_MEDIUM, 
                         fontWeight: 'bold'
-                    }}>Check Out</Text>
+                    }}>Payment</Text>
                 </TouchableOpacity>
             </View>
-        </View>
-    )
+    </View>
+  )
 }
+
+export default CheckOutScreen;
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        width: '100%',
+        height: '100%',
         backgroundColor: Colors.DEFAULT_WHITE,
-        paddingTop: 70
+        paddingTop: 70,
+        position: 'absolute'
     },
     header:{
         flexDirection: 'row',
         marginHorizontal: 15,
         alignItems: 'center',
-        
+        marginBottom: 15
+    },
+    address:{
+        // borderWidth: 1,
+        // borderColor: Colors.THIRD_GREEN,
+        borderRadius: 10,
+        marginVertical: 10,
+        backgroundColor: Colors.THIRD_WHITE,
+        paddingHorizontal: 15,
+        fontSize: 18
     },
     card: {
         backgroundColor: Colors.DEFAULT_WHITE,
-        marginTop: 15,
+        marginTop: 0,
         marginHorizontal: 15,
         // alignItems: 'center',
     },
@@ -210,21 +232,22 @@ const styles = StyleSheet.create({
     textprice:{
         fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
-        fontSize: 22, 
+        fontSize: 20, 
         fontWeight: '500',
         marginLeft: 20
     },
     total:{
-        backgroundColor: Colors.DEFAULT_WHITE,
-        height: '30%',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right:0,
+        // backgroundColor: Colors.DEFAULT_YELLOW,
+        // height: '30%',
+        // position: 'absolute',
+        // bottom: 0,
+        // left: 0,
+        // right:0,
+        marginTop: 15,
         paddingVertical: 5,
         marginHorizontal: 20,
-        borderTopWidth: 1,
-        borderTopColor: Colors.THIRD_GREEN
+        // borderTopWidth: 1,
+        // borderTopColor: Colors.THIRD_GREEN
     },
     order:{
         borderRadius: 35,
@@ -236,4 +259,3 @@ const styles = StyleSheet.create({
         marginTop: 10
     }
 })
-export default CartScreen;
