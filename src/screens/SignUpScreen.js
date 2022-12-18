@@ -1,15 +1,38 @@
-import { StyleSheet, Text, View, StatusBar,Image,TextInput,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, StatusBar,Image,TextInput,TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import React ,{useState} from 'react'
 import { Colors,Images,Fonts } from '../contants'
 import { Separator } from '../components'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
+import {user_register} from '../api/user_api'
 
 const SignUpScreen = ({navigation}) => {
   const [isPasswordShow,setPwShow] = useState(false);
+  const [userName, setuserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
+  const handleUserRegister = () => {
+    user_register({
+      email: email,
+      userName: userName,
+      password: password
+    })
+    .then((res)=> {
+      if(res.status == 200) {
+        // AsyncStorage.setItem("AccessToken", res.data.token);
+        // console.log(res.data);
+        navigation.navigate('SignIn');
+      }
+    })
+    .catch(err =>{
+      console.error(err);
+    })
+  };
+
   return (
     <View style= {styles.container}>
-      <StatusBar barStyle='light-content' 
+        <StatusBar barStyle='light-content' 
             backgroundColor={Colors.THIRD_LIGHT_GREEN} translucent/>
         
         <Separator height={20} />
@@ -21,7 +44,6 @@ const SignUpScreen = ({navigation}) => {
                     style = {styles.icon}
                     onPress={() => navigation.goBack()}/>
           </View>
-        
         <View style = {styles.Content}>
           <View style = {styles.titleContain}>
             <Text style= {styles.title}>Register</Text>
@@ -33,6 +55,8 @@ const SignUpScreen = ({navigation}) => {
               <Feather name='user' size={25} color= {Colors.THIRD_GREEN}/>
               <TextInput 
                 placeholder='Username ' 
+                value={userName}
+                onChangeText={newText => setuserName(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
                 style={styles.textInput}/>
             </View>
@@ -42,8 +66,10 @@ const SignUpScreen = ({navigation}) => {
             <View style = {styles.user}>
               <Feather name='mail' size={25} color= {Colors.THIRD_GREEN}/>
               <TextInput 
-                secureTextEntry= {true}
+                
                 placeholder='Email' 
+                value={email}
+                onChangeText={newText => setEmail(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
                 style={styles.textInput}
                  />
@@ -56,6 +82,8 @@ const SignUpScreen = ({navigation}) => {
               <TextInput 
                 secureTextEntry= {isPasswordShow ? false : true}
                 placeholder='Password' 
+                value={password}
+                onChangeText={newText => setPassword(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
                 style={styles.textInput}
                  />
@@ -74,7 +102,9 @@ const SignUpScreen = ({navigation}) => {
               <Feather name='lock' size={25} color= {Colors.THIRD_GREEN}/>
               <TextInput 
                 secureTextEntry= {isPasswordShow ? false : true}
-                placeholder='Confirm Password' 
+                placeholder='Confirm Password'
+                value={confirmpassword}
+                onChangeText={newText => setConfirmPassword(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
                 style={styles.textInput}
                  />
@@ -87,7 +117,7 @@ const SignUpScreen = ({navigation}) => {
                 />
             </View>
           </View>
-          <TouchableOpacity style= {styles.btLogIn} onPress = {()=> navigation.navigate('SignIn')}>
+          <TouchableOpacity style= {styles.btLogIn} onPress = {()=> handleUserRegister()}>
             <Text style= {styles.textLogIn}>Sign Up</Text>
           </TouchableOpacity>
         </View>
@@ -101,6 +131,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.DEFAULT_WHITE,
+    width: '100%',
+    height: '100%'
   },
   header:{
     // flex: 1,
