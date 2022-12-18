@@ -1,11 +1,40 @@
 import { StyleSheet,Image , Text, View,StatusBar,TextInput ,TouchableOpacity} from 'react-native'
-import React ,{useState} from 'react'
+import React ,{useState, useEffect} from 'react'
 import { Colors ,Images,Fonts} from "../contants"
 import { Separator } from '../components'
 import Feather from 'react-native-vector-icons/Feather'
+import { user_login } from '../api/user_api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignInScreeen = ({navigation}) => {
   const [isPasswordShow,setPwShow] = useState(false);
+  const [email, setEmail] = useState('user08@gmail.com');
+  const [password, setPassword] = useState('user08');
+  const handleUserLogin = () => {
+    if (!email) {
+      alert('Please fill Email');
+      return;
+    }
+    if (!password) {
+      alert('Please fill Password');
+      return;
+    }
+    user_login({
+      email: email,
+      password: password
+    })
+    .then((res)=> {
+      if(res.status == 200) {
+        AsyncStorage.setItem("AccessToken", res.data.token);
+        console.log(res.data.token);
+        navigation.navigate('HomeTab');
+      }
+    })
+    .catch(err =>{
+      console.error(err);
+    })
+  };
+
   return (
       <View style = {styles.container}>
         <StatusBar barStyle='light-content' 
@@ -27,7 +56,9 @@ const SignInScreeen = ({navigation}) => {
             <View style = {styles.user}>
               <Feather name='user' size={25} color= {Colors.THIRD_GREEN}/>
               <TextInput 
-                placeholder='Username ' 
+                placeholder='Email '
+                value={email} 
+                onChangeText={newText => setEmail(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
                 style={styles.textInput}/>
             </View>
@@ -39,6 +70,8 @@ const SignInScreeen = ({navigation}) => {
               <TextInput 
                 secureTextEntry= {isPasswordShow ? false : true}
                 placeholder='Password' 
+                value={password}
+                onChangeText={newText => setPassword(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
                 style={styles.textInput}
                  />
@@ -57,15 +90,16 @@ const SignInScreeen = ({navigation}) => {
         </View>
         
         <View flex = {1}>
-          <TouchableOpacity style= {styles.btLogIn}
-          onPress= {()=> navigation.navigate('HomeTab')}>
-            <Text style= {styles.textLogIn}>Login</Text>
-          </TouchableOpacity>
+              <TouchableOpacity style= {styles.btLogIn}
+                onPress= {()=> handleUserLogin()}>
+              <Text style= {styles.textLogIn}>Login</Text>
+            </TouchableOpacity>
+          
           <View style={styles.signupContainer}>
             <Text style={styles.accountText}>Don't have an account?</Text>
             <Text
               style={styles.signupText}
-              onPress={() => navigation.navigate('SignUp')}>
+              onPress={() => navigation.navigate('HomeTab')}>
               Sign Up
             </Text>
           </View>
@@ -167,6 +201,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
     // marginBottom: 50 
+  },
+  btLogInDisable:{
+    backgroundColor: Colors.THIRD_GREY,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
   },
   textLogIn:{
     fontFamily: Fonts.NOTO_REGULAR,
