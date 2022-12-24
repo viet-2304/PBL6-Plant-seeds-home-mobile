@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet,View, TouchableOpacity,Image,Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Colors ,Fonts} from '../contants';
+import { Colors ,Fonts,Images} from '../contants';
 
 const Card = ({plant,navigation}) => {
     return (
@@ -11,17 +11,17 @@ const Card = ({plant,navigation}) => {
         <View style={styles.card}>
           <View style={styles.cardImage}>
             <Image
-              source={plant.img}
+              source={Images.Plant}
               style={{flex: 1, resizeMode: 'contain'}}
             />
           </View>
 
           <View style={styles.price}>
             <Text style={styles.plantName}>
-              {plant.name}
+              {plant.productName}
             </Text>
             <Text style={styles.textprice}>
-              ${plant.price}
+              {plant.price} VND
             </Text>
           </View>
         </View>
@@ -46,8 +46,9 @@ const styles = StyleSheet.create({
     plantName:{
         fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
-        fontWeight: 'bold', 
-        fontSize: 20, 
+        fontWeight: '700', 
+        fontSize: 16, 
+        height: 40
     },
     price:{
         flexDirection: 'column',
@@ -56,10 +57,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 15
     },
     textprice:{
-        fontFamily: Fonts.POPPINS_BOLD,
-        color: Colors.THIRD_GREEN,
-        fontSize: 20, 
-        fontWeight: 'bold',
+        fontFamily: Fonts.POPPINS_MEDIUM,
+        color: Colors.SECONDARY_GREEN,
+        fontSize: 18, 
+        fontWeight: '700',
     }
 });
 export default Card;

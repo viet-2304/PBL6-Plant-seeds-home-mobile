@@ -28,43 +28,6 @@ const CartScreen = ({navigation,route}) =>{
             </View>
             <View style = {{height: '65%'}}>
                 <ScrollView style={styles.card}>
-                    <View style={styles.cardItem}>
-                        <View style={styles.cardImage}>
-                            <Image
-                                source={plants.img}
-                                style={{flex: 1, resizeMode: 'contain'}}
-                            />
-                        </View>
-                        <View style = {{width: '70%',flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row',justifyContent: 'space-between', marginVertical: 10}}>
-                                <Text style={styles.plantName}>
-                                        {plants.name}
-                                </Text>
-                                
-                                <Ionicons name="trash" size={24} 
-                                    style={{color: Colors.THIRD_GREEN }}
-                                />
-                            </View>
-                            <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-around',alignItems:'center'}}>
-                                <Ionicons name="remove"size={24} style={{color: Colors.THIRD_GREEN}}/>
-                                <Text 
-                                    style={{
-                                        fontSize: 20,
-                                        color: Colors.THIRD_GREEN,
-                                        borderWidth: 1.5,
-                                        borderColor: Colors.THIRD_GREEN,
-                                        borderRadius: 8,
-                                        paddingHorizontal: 8
-                                    }}
-                                    >1
-                                </Text>
-                                <Ionicons name="add"size={24}style={{color: Colors.THIRD_GREEN}}/>
-                                <Text style={styles.textprice}>
-                                    ${plants.price}
-                                </Text>
-                            </View>
-                        </View>    
-                    </View>
 
                     <View style={styles.cardItem}>
                         <View style={styles.cardImage}>
@@ -74,16 +37,15 @@ const CartScreen = ({navigation,route}) =>{
                             />
                         </View>
                         <View style = {{width: '70%',flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row',justifyContent: 'space-between', marginVertical: 10}}>
+                            <View style={{flexDirection: 'row',justifyContent: 'space-evenly', marginVertical: 10, marginHorizontal: 5}}>
                                 <Text style={styles.plantName}>
-                                        {plants.name}
+                                        {plants.productName}
                                 </Text>
-                                
                                 <Ionicons name="trash" size={24} 
-                                    style={{color: Colors.THIRD_GREEN }}
+                                    style={{color: Colors.THIRD_GREEN, marginLeft: 10 }}
                                 />
                             </View>
-                            <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-around',alignItems:'center'}}>
+                            <View style={{marginVertical: 0,flexDirection: 'row',justifyContent:'space-around',alignItems:'center'}}>
                                 <Ionicons name="remove"size={24} style={{color: Colors.THIRD_GREEN}}/>
                                 <Text 
                                     style={{
@@ -98,7 +60,7 @@ const CartScreen = ({navigation,route}) =>{
                                 </Text>
                                 <Ionicons name="add"size={24}style={{color: Colors.THIRD_GREEN}}/>
                                 <Text style={styles.textprice}>
-                                    ${plants.price}
+                                    {plants.price} VND
                                 </Text>
                             </View>
                         </View>    
@@ -163,7 +125,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.DEFAULT_WHITE,
-        paddingTop: 70
+        paddingTop: 30
     },
     header:{
         flexDirection: 'row',
@@ -204,7 +166,7 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
         fontWeight: 'bold', 
-        fontSize: 22,
+        fontSize: 16,
     },
     
     textprice:{

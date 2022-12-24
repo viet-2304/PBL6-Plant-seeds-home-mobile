@@ -28,7 +28,7 @@ const OrderItem = ({navigation}) => {
                 fontWeight: '600',
                 fontSize: 20,
                 color: Colors.DEFAULT_RED
-            }}>$35.00</Text>
+            }}>$40.00</Text>
         </View>
       </TouchableOpacity>
     );
