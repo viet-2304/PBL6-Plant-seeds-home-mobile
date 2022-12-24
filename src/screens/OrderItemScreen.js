@@ -1,6 +1,6 @@
 import { StyleSheet,KeyboardAvoidingView,Image , Text, View,StatusBar,TextInput ,TouchableOpacity,ScrollView} from 'react-native'
 import React ,{useState} from 'react'
-import { Colors ,Images,Fonts} from "../contants"
+import { Colors ,Images,Fonts, plants} from "../contants"
 import { Separator } from '../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -34,7 +34,7 @@ const OrderItemScreen = ({navigation,route}) => {
                 fontWeight: '300',
                 color: Colors.THIRD_GREEN
             }}>Delivery Address</Text>
-            <TextInput placeholder='Address'editable = {false} style = {styles.address}/>
+            <TextInput placeholder='Nguyen Luong Bang, Da Nang'editable = {false} style = {styles.address}/>
         </View>
         
         <Text style={{
@@ -49,14 +49,14 @@ const OrderItemScreen = ({navigation,route}) => {
                     <View style={styles.cardItem}>
                         <View style={styles.cardImage}>
                             <Image
-                                source={Images.Logo_home}
+                                source={Images.Plant}
                                 style={{flex: 1, resizeMode: 'contain'}}
                             />
                         </View>
                         <View style = {{width: '70%',flexDirection: 'column',paddingHorizontal:10}}>
                             <View style={{flexDirection: 'row',justifyContent: 'space-between', marginVertical: 10}}>
                                 <Text style={styles.plantName}>
-                                        Hoa hong
+                                        Dragon Plant
                                 </Text>
                             </View>
                             <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-between',alignItems:'center'}}>
@@ -154,7 +154,7 @@ const OrderItemScreen = ({navigation,route}) => {
                         color: Colors.THIRD_GREEN,
                         fontFamily: Fonts.POPPINS_MEDIUM,
                         fontWeight: '500'
-                    }}>$35.99</Text>
+                    }}>$40.00</Text>
                 </View>
             </View>
     </View>

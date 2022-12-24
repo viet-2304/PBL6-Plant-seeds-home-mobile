@@ -5,6 +5,7 @@ import { Separator } from '../components'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import {user_register} from '../api/user_api'
+import { Alert } from 'react-native'
 
 const SignUpScreen = ({navigation}) => {
   const [isPasswordShow,setPwShow] = useState(false);
@@ -12,7 +13,14 @@ const SignUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
+  const checkPass= () =>{
+    if(password != confirmpassword && password != ''){
+      alert('Please check your password or confirm password!');
+      return;
+    }
+  }
   const handleUserRegister = () => {
+    checkPass();
     user_register({
       email: email,
       userName: userName,
@@ -67,7 +75,7 @@ const SignUpScreen = ({navigation}) => {
               <Feather name='mail' size={25} color= {Colors.THIRD_GREEN}/>
               <TextInput 
                 
-                placeholder='Email' 
+                placeholder='Email ' 
                 value={email}
                 onChangeText={newText => setEmail(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
@@ -117,9 +125,18 @@ const SignUpScreen = ({navigation}) => {
                 />
             </View>
           </View>
-          <TouchableOpacity style= {styles.btLogIn} onPress = {()=> handleUserRegister()}>
-            <Text style= {styles.textLogIn}>Sign Up</Text>
-          </TouchableOpacity>
+          <Separator height={20}/>
+          <View flex= {1}>
+            {userName == '' || email== '' || password=='' || confirmpassword=='' ?(
+              <TouchableOpacity style= {styles.btLogInDisable} onPress = {()=> handleUserRegister()}>
+                <Text style= {styles.textLogIn}>Sign Up</Text>
+              </TouchableOpacity>
+            ):(
+              <TouchableOpacity style= {styles.btLogIn} onPress = {()=> handleUserRegister()}>
+                <Text style= {styles.textLogIn}>Sign Up</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
     </View>
   )
@@ -198,7 +215,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    marginTop: 70 
+  },
+  btLogInDisable:{
+    backgroundColor: Colors.THIRD_GREY,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
   },
   textLogIn:{
     fontFamily: Fonts.NOTO_REGULAR,

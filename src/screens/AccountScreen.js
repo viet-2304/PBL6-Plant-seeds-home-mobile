@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: Colors.DEFAULT_WHITE,
-        paddingTop: 70,
+        paddingTop: 30,
         position: 'absolute'
     },
     header:{

@@ -11,14 +11,6 @@ const SignInScreeen = ({navigation}) => {
   const [email, setEmail] = useState('user08@gmail.com');
   const [password, setPassword] = useState('user08');
   const handleUserLogin = () => {
-    if (!email) {
-      alert('Please fill Email');
-      return;
-    }
-    if (!password) {
-      alert('Please fill Password');
-      return;
-    }
     user_login({
       email: email,
       password: password
@@ -26,7 +18,7 @@ const SignInScreeen = ({navigation}) => {
     .then((res)=> {
       if(res.status == 200) {
         AsyncStorage.setItem("AccessToken", res.data.token);
-        console.log(res.data.token);
+        // console.log(res.data.token);
         navigation.navigate('HomeTab');
       }
     })
@@ -56,7 +48,7 @@ const SignInScreeen = ({navigation}) => {
             <View style = {styles.user}>
               <Feather name='user' size={25} color= {Colors.THIRD_GREEN}/>
               <TextInput 
-                placeholder='Email '
+                placeholder='Email  '
                 value={email} 
                 onChangeText={newText => setEmail(newText)}
                 placeholderTextColor={Colors.THIRD_GREEN} 
@@ -90,16 +82,22 @@ const SignInScreeen = ({navigation}) => {
         </View>
         
         <View flex = {1}>
-              <TouchableOpacity style= {styles.btLogIn}
+          {email=='' || password=='' ?(
+            <TouchableOpacity style= {styles.btLogInDisable}
+              onPress= {()=> handleUserLogin()}>
+              <Text style= {styles.textLogIn}>Login</Text>
+            </TouchableOpacity>
+          ): (
+            <TouchableOpacity style= {styles.btLogIn}
                 onPress= {()=> handleUserLogin()}>
               <Text style= {styles.textLogIn}>Login</Text>
             </TouchableOpacity>
-          
+          )}        
           <View style={styles.signupContainer}>
             <Text style={styles.accountText}>Don't have an account?</Text>
             <Text
               style={styles.signupText}
-              onPress={() => navigation.navigate('HomeTab')}>
+              onPress={() => navigation.navigate('SignUp')}>
               Sign Up
             </Text>
           </View>
