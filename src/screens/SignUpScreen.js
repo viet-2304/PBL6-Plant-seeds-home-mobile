@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar,Image,TextInput,TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView,Image,TextInput,TouchableOpacity, KeyboardAvoidingView } from 'react-native'
 import React ,{useState} from 'react'
 import { Colors,Images,Fonts } from '../contants'
 import { Separator } from '../components'
@@ -21,6 +21,7 @@ const SignUpScreen = ({navigation}) => {
   }
   const handleUserRegister = () => {
     checkPass();
+
     user_register({
       email: email,
       userName: userName,
@@ -28,8 +29,6 @@ const SignUpScreen = ({navigation}) => {
     })
     .then((res)=> {
       if(res.status == 200) {
-        // AsyncStorage.setItem("AccessToken", res.data.token);
-        // console.log(res.data);
         navigation.navigate('SignIn');
       }
     })
@@ -40,104 +39,101 @@ const SignUpScreen = ({navigation}) => {
 
   return (
     <View style= {styles.container}>
-        <StatusBar barStyle='light-content' 
-            backgroundColor={Colors.THIRD_LIGHT_GREEN} translucent/>
-        
-        <Separator height={20} />
-          <View style = {styles.header}>
-            <Image source={Images.SignUpImage} style= {styles.image}/>
-            <Ionicons 
-                    name='chevron-back' 
-                    size={35} 
-                    style = {styles.icon}
-                    onPress={() => navigation.goBack()}/>
-          </View>
-        <View style = {styles.Content}>
+      <View style = {styles.header}>
+        <Image source={Images.SignUpImage} style= {styles.image}/>
+        <Ionicons 
+          name='chevron-back' 
+          size={35} 
+          style = {styles.icon}
+          onPress={() => navigation.goBack()}/>
+      </View>
+      <View style={{height:'80%',width: '100%',position: 'relative'}}>
           <View style = {styles.titleContain}>
             <Text style= {styles.title}>Register</Text>
             <Text style= {styles.text}>Create your new account</Text>
           </View>
-          <Separator height={20}/>
-          <View style = {styles.inputUser}>
-            <View style = {styles.user}>
-              <Feather name='user' size={25} color= {Colors.THIRD_GREEN}/>
-              <TextInput 
-                placeholder='Username ' 
-                value={userName}
-                onChangeText={newText => setuserName(newText)}
-                placeholderTextColor={Colors.THIRD_GREEN} 
-                style={styles.textInput}/>
+          <ScrollView>
+            <Separator height={20}/>
+            <View style = {styles.inputUser}>
+              <View style = {styles.user}>
+                <Feather name='user' size={25} color= {Colors.THIRD_GREEN}/>
+                <TextInput 
+                  placeholder='Username ' 
+                  value={userName}
+                  onChangeText={newText => setuserName(newText)}
+                  placeholderTextColor={Colors.THIRD_GREEN} 
+                  style={styles.textInput}/>
+              </View>
             </View>
-          </View>
-          <Separator height={20}/>
-          <View style = {styles.inputUser}>
-            <View style = {styles.user}>
-              <Feather name='mail' size={25} color= {Colors.THIRD_GREEN}/>
-              <TextInput 
-                
-                placeholder='Email ' 
-                value={email}
-                onChangeText={newText => setEmail(newText)}
-                placeholderTextColor={Colors.THIRD_GREEN} 
-                style={styles.textInput}
-                 />
+
+            <Separator height={20}/>
+            <View style = {styles.inputUser}>
+              <View style = {styles.user}>
+                <Feather name='mail' size={25} color= {Colors.THIRD_GREEN}/>
+                <TextInput 
+                  placeholder='Email ' 
+                  value={email}
+                  onChangeText={newText => setEmail(newText)}
+                  placeholderTextColor={Colors.THIRD_GREEN} 
+                  style={styles.textInput}
+                  />
+              </View>
             </View>
-          </View>
-          <Separator height={20}/>
-          <View style = {styles.inputUser}>
-            <View style = {styles.user}>
-              <Feather name='lock' size={25} color= {Colors.THIRD_GREEN}/>
-              <TextInput 
-                secureTextEntry= {isPasswordShow ? false : true}
-                placeholder='Password' 
-                value={password}
-                onChangeText={newText => setPassword(newText)}
-                placeholderTextColor={Colors.THIRD_GREEN} 
-                style={styles.textInput}
-                 />
-              <Feather 
-                name={isPasswordShow ? 'eye' : 'eye-off'} 
-                size={25} 
-                color= {Colors.THIRD_GREEN} 
-                style={{left: 300, position:'absolute'}}
-                onPress ={()=>setPwShow(!isPasswordShow)} 
-                />
+            <Separator height={20}/>
+            <View style = {styles.inputUser}>
+              <View style = {styles.user}>
+                <Feather name='lock' size={25} color= {Colors.THIRD_GREEN}/>
+                <TextInput 
+                  secureTextEntry= {isPasswordShow ? false : true}
+                  placeholder='Password ' 
+                  value={password}
+                  onChangeText={newText => setPassword(newText)}
+                  placeholderTextColor={Colors.THIRD_GREEN} 
+                  style={styles.textInput}
+                  />
+                <Feather 
+                  name={isPasswordShow ? 'eye' : 'eye-off'} 
+                  size={25} 
+                  color= {Colors.THIRD_GREEN} 
+                  style={{left: 300, position:'absolute'}}
+                  onPress ={()=>setPwShow(!isPasswordShow)} 
+                  />
+              </View>
             </View>
-          </View>
-          <Separator height={20}/>
-          <View style = {styles.inputUser}>
-            <View style = {styles.user}>
-              <Feather name='lock' size={25} color= {Colors.THIRD_GREEN}/>
-              <TextInput 
-                secureTextEntry= {isPasswordShow ? false : true}
-                placeholder='Confirm Password'
-                value={confirmpassword}
-                onChangeText={newText => setConfirmPassword(newText)}
-                placeholderTextColor={Colors.THIRD_GREEN} 
-                style={styles.textInput}
-                 />
-              <Feather 
-                name={isPasswordShow ? 'eye' : 'eye-off'} 
-                size={25} 
-                color= {Colors.THIRD_GREEN} 
-                style={{left: 300, position:'absolute'}}
-                onPress ={()=>setPwShow(!isPasswordShow)} 
-                />
+            <Separator height={20}/>
+            <View style = {styles.inputUser}>
+              <View style = {styles.user}>
+                <Feather name='lock' size={25} color= {Colors.THIRD_GREEN}/>
+                <TextInput 
+                  secureTextEntry= {isPasswordShow ? false : true}
+                  placeholder='Confirm Password '
+                  value={confirmpassword}
+                  onChangeText={newText => setConfirmPassword(newText)}
+                  placeholderTextColor={Colors.THIRD_GREEN} 
+                  style={styles.textInput}
+                  />
+                <Feather 
+                  name={isPasswordShow ? 'eye' : 'eye-off'} 
+                  size={25} 
+                  color= {Colors.THIRD_GREEN} 
+                  style={{left: 300, position:'absolute'}}
+                  onPress ={()=>setPwShow(!isPasswordShow)} 
+                  />
+              </View>
             </View>
-          </View>
-          <Separator height={20}/>
-          <View flex= {1}>
-            {userName == '' || email== '' || password=='' || confirmpassword=='' ?(
-              <TouchableOpacity style= {styles.btLogInDisable} onPress = {()=> handleUserRegister()}>
-                <Text style= {styles.textLogIn}>Sign Up</Text>
-              </TouchableOpacity>
-            ):(
-              <TouchableOpacity style= {styles.btLogIn} onPress = {()=> handleUserRegister()}>
-                <Text style= {styles.textLogIn}>Sign Up</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
+            <View style={{marginTop: 40}}>
+              {userName == '' || email== '' || password=='' || confirmpassword=='' ?(
+                <TouchableOpacity style= {styles.btLogInDisable} onPress = {()=> handleUserRegister()}>
+                  <Text style= {styles.textLogIn}>Sign Up</Text>
+                </TouchableOpacity>
+              ):(
+                <TouchableOpacity style= {styles.btLogIn} onPress = {()=> handleUserRegister()}>
+                  <Text style= {styles.textLogIn}>Sign Up</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          </ScrollView>
+      </View>
     </View>
   )
 }
@@ -149,18 +145,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.DEFAULT_WHITE,
     width: '100%',
-    height: '100%'
+    height: '100%',
+    position: 'absolute'
   },
   header:{
-    // flex: 1,
-    flexDirection:'column',
-    height: 180
+    width: '100%',
+    height: 180,
+    position: 'relative',
   },
   image:{
     width: '100%',
     height: '100%',
     resizeMode:'cover',
     position:'relative',
+    flex: 1
   },
   icon:{
     marginTop: 120,

@@ -13,7 +13,7 @@ export const user_login = async (data) => {
 };
 
 export const user_register = async (data) =>{
-    console.log(data);
+    // console.log(data);
     try {
         const res = await api('v1/users/createUser',{
             method: 'POST',
@@ -30,7 +30,6 @@ export const category = async () => {
         const res = await api('v1/product/getAllProductType',{
             method: 'GET',
         });
-        // console.log(res);
         return res;
     } catch (error) {
         return error.response.data;
@@ -42,9 +41,42 @@ export const getplants = async ()=> {
         const res = await api('v1/product/getAllProduct',{
             method: 'GET',
         });
-        // console.log(res);
         return res;
     } catch (error) {
         return error.response.data;
     }
 }
+
+export const getCurrentUser = async (token)=>{
+    try {
+        const res = await api('v1/users/getCurrentUser',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        return res;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const editUser = async(token,data) =>{
+    console.log(token);
+    console.log(data);
+    try {
+        const res = await api('v1/users/editUser',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+            data: data,
+        });
+        return res;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+

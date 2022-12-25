@@ -1,5 +1,5 @@
 import { View, Text, StatusBar, Image,StyleSheet,TouchableOpacity } from 'react-native'
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { Colors ,Images,Fonts} from "../contants"
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
@@ -7,6 +7,17 @@ import Feather from 'react-native-vector-icons/Feather'
 
 const DetailsScreen = ({navigation,route}) => {
     const plant = route.params;
+    
+    const [quantity, setQuantity] = useState(1);
+
+    const handleQuantity= (type) =>{
+        if(type === 'down'){
+            quantity > 1 && setQuantity((prev) => prev - 1 );
+        }
+        else{
+            setQuantity((prev) => prev + 1);
+        }
+    }
 
     return (
         <View style = {styles.container}>
@@ -34,13 +45,19 @@ const DetailsScreen = ({navigation,route}) => {
                     <View style={{flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'}}>
                         <Text style = {styles.textPrice}>{plant.price} VND</Text>
                         <View style = {styles.buyContain}>
-                            <Ionicons name="remove"size={24} style={{color: Colors.DEFAULT_WHITE}}/>
+                            <Ionicons 
+                                name="remove"size={24} 
+                                style={{color: Colors.DEFAULT_WHITE}}
+                                onPress={() => handleQuantity('down')}/>
                             <Text style= {{
                                 fontSize : 20 , 
                                 color: Colors.DEFAULT_WHITE ,
                                 fontWeight: 'bold'
-                            }}>1</Text>
-                            <Ionicons name="add"size={24}style={{color: Colors.DEFAULT_WHITE}}/>
+                            }}>{quantity}</Text>
+                            <Ionicons 
+                                name="add"size={24}
+                                style={{color: Colors.DEFAULT_WHITE}}
+                                onPress={() => handleQuantity('up')}/>
                         </View> 
                     </View>
                     

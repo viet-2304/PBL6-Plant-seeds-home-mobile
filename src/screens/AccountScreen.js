@@ -1,11 +1,45 @@
 import { StyleSheet, Text, View,StatusBar ,TouchableOpacity,Image,TextInput} from 'react-native'
-import React,{useState} from 'react'
+import React,{useState,useEffect,localStorage} from 'react'
 import { Colors,Images,Fonts } from '../contants'
 import { Separator } from '../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import api from '../api/api'
+import { getCurrentUser } from '../api/user_api'
 
 const AccountScreen = ({navigation})=> {
+    const [currentUser,setCurrentUser] = useState([]);
+    const [accessToken,setAccessToken] = useState('');
+
+    useEffect(()=>{    
+        if(accessToken == "") {
+            getAccessToken();
+        }
+        else {
+            // api.get('v1/users/getCurrentUser',{
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         Authorization: 'Bearer ' + accessToken,
+            //     },
+            // })
+            getCurrentUser(accessToken)
+            .then(res => {
+                setCurrentUser(res.data);
+            })
+            .catch(err =>{
+                console.error(err);
+            });
+        }
+    },[accessToken]);
+    // console.log(currentUser.id);
+    const getAccessToken = async () =>{
+        const value = await AsyncStorage.getItem('AccessToken');
+        if (value !== null) {
+            // We have data!!
+            setAccessToken(value);
+        }
+    }
     return(
         <View style = {styles.container}>
             <View style = {styles.header}>
@@ -28,7 +62,7 @@ const AccountScreen = ({navigation})=> {
             </View>
             <View style = {styles.Avatar}>
                 <Image source={Images.AvatarImage} style= {styles.ImageAvatar}/>
-                <Text style = {styles.NameAccount}>Vu Thi Nga</Text>
+                <Text style = {styles.NameAccount}>{currentUser?.userName}</Text>
             </View>
             <View style = {{marginHorizontal: 10,alignItems: 'center'}}>
                     <View style = {styles.line} />
@@ -38,7 +72,7 @@ const AccountScreen = ({navigation})=> {
                 <View style= {styles.element}>
                     <TouchableOpacity style = {{
                             flexDirection: 'row',}}
-                        onPress = {()=> navigation.navigate('EditProfile')}>
+                        onPress = {()=> navigation.navigate('EditProfile',currentUser)}>
                         <Ionicons name='create-outline' size={30} style={{color: Colors.THIRD_GREEN}}/>
                         <Text style={styles.funtionText}>Edit Profile</Text>    
                     </TouchableOpacity>
@@ -55,11 +89,6 @@ const AccountScreen = ({navigation})=> {
                     </TouchableOpacity>
                 </View>
 
-                {/* <View style= {styles.element}>
-                    <Ionicons name='card-outline' size={30} style={{color: Colors.DEFAULT_BLACK}}/>
-                    <Text style={styles.funtionText}>Orders</Text>
-                    <Ionicons name='chevron-forward-outline' size={25} style={{color: Colors.DEFAULT_BLACK, right: 0 ,position:'absolute'}}/>
-                </View> */}
                 <View style= {styles.element}>
                     <TouchableOpacity 
                         style = {{

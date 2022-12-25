@@ -8,9 +8,6 @@ import { category, getplants } from '../api/user_api';
 
 const HomeScreen = ({navigation}) => {
     const [catergoryIndex, setCategoryIndex] = React.useState(0);
-
-    const categories = ['POPULAR', 'ORGANIC', 'INDOORS', 'SYNTHETIC'];
-
     const [data,setData] = useState([]);
     const [plant,setPlants] = useState([]);
 
@@ -18,7 +15,6 @@ const HomeScreen = ({navigation}) => {
         category()
         .then(res =>{
             setData(res.data);
-            // console.log(res.data);
         })
         .catch(err=>{
             console.error(err);
@@ -27,7 +23,6 @@ const HomeScreen = ({navigation}) => {
         getplants()
         .then(res=> {
             setPlants(res.data);
-            // console.log(res.data);
         })
         .catch(err=>{
             console.error(err);
@@ -162,6 +157,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         justifyContent: 'space-between',
+        paddingHorizontal: 5
     },
     categoryText: {
         fontSize: 18, 

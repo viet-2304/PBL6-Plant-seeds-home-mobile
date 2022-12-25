@@ -32,7 +32,7 @@ const CartScreen = ({navigation,route}) =>{
                     <View style={styles.cardItem}>
                         <View style={styles.cardImage}>
                             <Image
-                                source={plants.img}
+                                source={Images.Plant}
                                 style={{flex: 1, resizeMode: 'contain'}}
                             />
                         </View>
