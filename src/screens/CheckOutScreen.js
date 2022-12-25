@@ -93,18 +93,7 @@ const CheckOutScreen = ({navigation,route}) => {
                 color: Colors.THIRD_GREEN
             }}>Payment Method</Text>
 
-        <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-            // borderWidth: 1,
-            // borderColor: Colors.THIRD_GREEN,
-            borderRadius: 10,
-            paddingHorizontal: 15,
-            paddingVertical: 8,
-            alignItems: 'center',
-            backgroundColor: Colors.THIRD_WHITE,
-        }}> 
+        <View style={styles.paymentMethod}> 
             <Text style={{
                 fontSize: 20,
                 fontFamily: Fonts.POPPINS_MEDIUM,
@@ -132,18 +121,9 @@ const CheckOutScreen = ({navigation,route}) => {
                             fontFamily: Fonts.POPPINS_REGULAR,
                             color: Colors.THIRD_GREEN
                         }}>Shipping cost</Text>
-                    <Text style={styles.textprice}>
-                                        $10.00
-                                    </Text>
+                    <Text style={styles.textprice}>$10.00</Text>
                 </View>
-                <View style = {{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: 5,
-                        alignItems: 'center',
-                        borderTopWidth: 1,
-                        borderTopColor: Colors.THIRD_GREEN
-                    }}>
+                <View style = {styles.countTotal}>
                     <Text style= {{
                             fontSize: 20,
                             fontFamily: Fonts.POPPINS_MEDIUM,
@@ -175,14 +155,14 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         backgroundColor: Colors.DEFAULT_WHITE,
-        paddingTop: 70,
         position: 'absolute'
     },
     header:{
         flexDirection: 'row',
         marginHorizontal: 15,
         alignItems: 'center',
-        marginBottom: 15
+        marginBottom: 15,
+        paddingTop: 30,
     },
     address:{
         // borderWidth: 1,
@@ -228,7 +208,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold', 
         fontSize: 22,
     },
-    
+    paymentMethod:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 8,
+        alignItems: 'center',
+        backgroundColor: Colors.THIRD_WHITE,
+    },
     textprice:{
         fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
@@ -248,6 +237,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         // borderTopWidth: 1,
         // borderTopColor: Colors.THIRD_GREEN
+    },
+    countTotal:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 5,
+        alignItems: 'center',
+        borderTopWidth: 1,
+        borderTopColor: Colors.THIRD_GREEN
     },
     order:{
         borderRadius: 35,

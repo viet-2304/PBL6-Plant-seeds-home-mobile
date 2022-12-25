@@ -5,7 +5,6 @@ import { Colors ,Fonts} from './src/contants';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from './src/screens/SplashScreen';
-import SignInScreeen from './src/screens/SignInScreeen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import DetailsScreen from './src/screens/DetailsScreen';
@@ -19,6 +18,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { color } from '@rneui/base';
 import CartScreen from './src/screens/CartScreen';
 import OrderItemScreen from './src/screens/OrderItemScreen';
+import LoginScreen from './src/screens/LoginScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -65,7 +65,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash" screenOptions={{headerShown:false}}>
         <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreeen} />
+        <Stack.Screen name="SignIn" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="HomeTab" component={MyTab} />
         <Stack.Screen name="Detail" component={DetailsScreen} />
