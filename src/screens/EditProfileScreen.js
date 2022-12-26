@@ -8,22 +8,25 @@ import { editUser } from '../api/user_api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignInScreeen = ({navigation,route}) => {
+    
+    const {currentUser,setAccessToken} = route.params;
+    const user = currentUser;
 
-    const user = route.params;
     const [id,setId] = useState(user.id);
     const [email,setEmail] = useState(user.email);
     const [username,setUsername] = useState(user.userName);
     const [phone,setPhone] = useState(user.phoneNumber);
     const [address,serAddress] = useState(user.address);
-    const [accessToken,setAccessToken] = useState('');
-    
+    const [Token,setToken] = useState('');
+
     useEffect(()=>{    
-        if(accessToken == "") {
+        if(Token == "") {
             getAccessToken();
         }        
-    },[accessToken]);
+    },[Token]);
+
     const handleSave =() =>{
-        editUser(accessToken,{
+        editUser(Token,{
             id: id,
             email: email,
             phoneNumber: phone,
@@ -32,10 +35,10 @@ const SignInScreeen = ({navigation,route}) => {
             imageAvatar: '',
             roleId: '',
         })
-        .then(res =>{
+        .then((res) =>{
             alert('Edit success!');
-            navigation.goBack();
-            // console.log(res);
+            setAccessToken('')
+            // navigation.goBack();
         })
         .catch(err =>{
             console.error(err);
@@ -46,7 +49,7 @@ const SignInScreeen = ({navigation,route}) => {
         const value = await AsyncStorage.getItem('AccessToken');
         if (value !== null) {
             // We have data!!
-            setAccessToken(value);
+            setToken(value);
         }
     }
   return (

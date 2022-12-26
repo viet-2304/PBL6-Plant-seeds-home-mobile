@@ -3,13 +3,18 @@ import React,{useEffect,useState} from 'react';
 import { Colors ,Images,Fonts} from "../contants"
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
+import { addtoCart, getCurrentUser } from '../api/user_api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const DetailsScreen = ({navigation,route}) => {
     const plant = route.params;
     
     const [quantity, setQuantity] = useState(1);
+    const [userId,setUserId] = useState('');
+    const [token,setToken] = useState('');
 
+    //ham tang giam so luong
     const handleQuantity= (type) =>{
         if(type === 'down'){
             quantity > 1 && setQuantity((prev) => prev - 1 );
@@ -17,6 +22,36 @@ const DetailsScreen = ({navigation,route}) => {
         else{
             setQuantity((prev) => prev + 1);
         }
+    }
+
+    useEffect(()=>{
+        if(userId == '' || token == ''){
+            getuserId();
+        }
+    },[userId,token]);
+
+    //lay userId & token
+    const getuserId = async () =>{
+        const id = await AsyncStorage.getItem('userID');
+        setUserId(id);
+
+        const tk = await AsyncStorage.getItem('AccessToken');
+        setToken(tk);
+    };
+    //ham them vao gio hang
+    const handleAddtoCart=() =>{
+        addtoCart(token,{
+            number: quantity,
+            userId: userId,
+            productId: plant.productId,
+        }).then(res =>{
+            alert('Thêm vào giỏ hàng thành công!');
+        })
+        .catch(err =>{
+            console.error(err);
+        })
+
+        // navigation.navigate('Cart',plant);
     }
 
     return (
@@ -88,12 +123,12 @@ const DetailsScreen = ({navigation,route}) => {
                             fontWeight : '200',
                             marginTop: 10,
                             color: Colors.DEFAULT_BLACK
-                    }}>Hạn sử dụng: {plant.exp.split('T')[0]}</Text>
+                    }}>Hạn sử dụng: {plant?.exp?.split('T')[0]}</Text>
                 </View>
                 
                 <View style = {styles.buy}>          
                     <TouchableOpacity style = {styles.BuyNow} 
-                        onPress={() => navigation.navigate('Cart',plant)}>
+                        onPress={() => handleAddtoCart()}>
                         <Feather name='shopping-cart' size={30} style = {{color: Colors.DEFAULT_WHITE}} />
                         <Text style= {{ 
                             marginHorizontal: 15,

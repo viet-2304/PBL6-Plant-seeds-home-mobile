@@ -15,16 +15,11 @@ const AccountScreen = ({navigation})=> {
     useEffect(()=>{    
         if(accessToken == "") {
             getAccessToken();
+            // console.log(accessToken);
         }
         else {
-            // api.get('v1/users/getCurrentUser',{
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //         Authorization: 'Bearer ' + accessToken,
-            //     },
-            // })
             getCurrentUser(accessToken)
-            .then(res => {
+            .then(async (res) => {
                 setCurrentUser(res.data);
             })
             .catch(err =>{
@@ -32,13 +27,17 @@ const AccountScreen = ({navigation})=> {
             });
         }
     },[accessToken]);
-    // console.log(currentUser.id);
+
     const getAccessToken = async () =>{
         const value = await AsyncStorage.getItem('AccessToken');
         if (value !== null) {
             // We have data!!
             setAccessToken(value);
         }
+    }
+
+    const handleEditUser=()=>{
+        navigation.navigate('EditProfile',{currentUser,setAccessToken});
     }
     return(
         <View style = {styles.container}>
@@ -72,7 +71,7 @@ const AccountScreen = ({navigation})=> {
                 <View style= {styles.element}>
                     <TouchableOpacity style = {{
                             flexDirection: 'row',}}
-                        onPress = {()=> navigation.navigate('EditProfile',currentUser)}>
+                        onPress = {()=> handleEditUser()}>
                         <Ionicons name='create-outline' size={30} style={{color: Colors.THIRD_GREEN}}/>
                         <Text style={styles.funtionText}>Edit Profile</Text>    
                     </TouchableOpacity>

@@ -4,31 +4,60 @@ import { Colors,Images,Fonts ,plants} from '../contants'
 import { Separator,Card } from '../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { category, getplants } from '../api/user_api';
+import { category, getCurrentUser, getplants } from '../api/user_api';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const HomeScreen = ({navigation}) => {
     const [catergoryIndex, setCategoryIndex] = React.useState(0);
     const [data,setData] = useState([]);
     const [plant,setPlants] = useState([]);
+    const [token,setToken] = useState('');
 
     useEffect(()=> {
         category()
         .then(res =>{
+            //lay category
             setData(res.data);
         })
         .catch(err=>{
             console.error(err);
-        })
+        });
 
         getplants()
         .then(res=> {
+            //lay danh sach product
             setPlants(res.data);
         })
         .catch(err=>{
             console.error(err);
-        })
+        });
+
     },[]);
 
+    useEffect(()=>{
+        if(token == ''){
+            getToken();
+        }
+        else{
+            getCurrentUser(token)
+            .then(async (res) =>{
+                //luu userId
+                await AsyncStorage.setItem('userID',res.data.id)
+            })
+            .catch(err =>{
+                console.error(err);
+            })
+        }
+    },[token]);
+
+    //lay token
+    const getToken = async () =>{
+        const value = await AsyncStorage.getItem('AccessToken');
+        if (value !== null) {
+            // We have data!!
+            setToken(value);
+        }
+    };
   return (
     <View style = {styles.container}>
         <StatusBar barStyle='light-content' 

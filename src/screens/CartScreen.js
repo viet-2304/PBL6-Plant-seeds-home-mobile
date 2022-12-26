@@ -3,9 +3,40 @@ import { View, Text, StatusBar, Image,StyleSheet,TouchableOpacity ,FlatList,Scro
 import { Colors ,Images,Fonts} from "../contants"
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
+import CartItem from "../components/CartItem";
+import { useState,useEffect } from "react";
+import { getCartDetail } from "../api/user_api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../api/api";
 
 const CartScreen = ({navigation,route}) =>{
-    const plants = route.params;
+    // const plants = route.params;
+    const [allcart,setAllcart] = useState([]);
+    const [userId,setUserId] = useState('');
+    const [token,setToken] = useState('');
+
+    useEffect(()=>{
+        if(userId == '' || token == ''){
+            getuserId();
+        }else{
+            getCartDetail(userId,token)
+            .then(res =>{
+                setAllcart(res.data.listProduct);
+                // console.log(res.data.listProduct);
+            })
+            .catch(err =>{
+                console.error(err);
+            })
+        }
+    },[userId,token]);
+    //lay userId & token
+    const getuserId = async () =>{
+        const id = await AsyncStorage.getItem('userID');
+        setUserId(id);
+
+        const tk = await AsyncStorage.getItem('AccessToken');
+        setToken(tk);
+    };
     return(
         <View style = {styles.container}>
             <View style = {styles.header}>
@@ -26,88 +57,54 @@ const CartScreen = ({navigation,route}) =>{
                     }}
                 >My Cart</Text>     
             </View>
-            <View style = {{height: '65%'}}>
+            <View style = {{height: '85%'}}>
                 <ScrollView style={styles.card}>
+                    {allcart?.map((shop)=>{
+                        let subTotal = 0;
+                        return (
+                            <View style = {{backgroundColor : Colors.DEFAULT_WHITE,marginBottom: 5}}>
+                                <Text style ={{
+                                    borderBottomColor: Colors.THIRD_GREEN,
+                                    borderBottomWidth: 1,
+                                    marginBottom: 5,
+                                    fontFamily: Fonts.POPPINS_MEDIUM,
+                                    fontSize: 18,
+                                    fontWeight: '400',
+                                    color: Colors.THIRD_GREY,
+                                    paddingHorizontal: 5
+                                }}>{shop?.shopName}</Text>
+                                {shop?.listProductAndNumberDto.map((product)=>{
+                                    subTotal +=
+                                        product?.price *
+                                        parseInt(product?.numberOfProductInCart);
+                                    return (
+                                        <CartItem 
+                                            plants={product} 
+                                            accessToken={token}
+                                            setUserId = {setUserId}
+                                            setToken ={setToken}/>   
+                                    );
+                                })}
+                                
 
-                    <View style={styles.cardItem}>
-                        <View style={styles.cardImage}>
-                            <Image
-                                source={Images.Plant}
-                                style={{flex: 1, resizeMode: 'contain'}}
-                            />
-                        </View>
-                        <View style = {{width: '70%',flexDirection: 'column'}}>
-                            <View style={{flexDirection: 'row',justifyContent: 'space-evenly', marginVertical: 10, marginHorizontal: 5}}>
-                                <Text style={styles.plantName}>
-                                        {plants.productName}
-                                </Text>
-                                <Ionicons name="trash" size={24} 
-                                    style={{color: Colors.THIRD_GREEN, marginLeft: 10 }}
-                                />
+                                <Text style= {{
+                                    borderTopColor: Colors.THIRD_GREEN,
+                                    borderTopWidth: 1,
+                                    marginTop: 5,
+                                    fontFamily: Fonts.POPPINS_MEDIUM,
+                                    fontSize: 18,
+                                    fontWeight: '400',
+                                    paddingHorizontal: 5,
+                                    color: Colors.THIRD_GREEN
+                                }}>Total: {subTotal} VND</Text>
                             </View>
-                            <View style={{marginVertical: 0,flexDirection: 'row',justifyContent:'space-around',alignItems:'center'}}>
-                                <Ionicons name="remove"size={24} style={{color: Colors.THIRD_GREEN}}/>
-                                <Text 
-                                    style={{
-                                        fontSize: 20,
-                                        color: Colors.THIRD_GREEN,
-                                        borderWidth: 1.5,
-                                        borderColor: Colors.THIRD_GREEN,
-                                        borderRadius: 8,
-                                        paddingHorizontal: 8
-                                    }}
-                                    >1
-                                </Text>
-                                <Ionicons name="add"size={24}style={{color: Colors.THIRD_GREEN}}/>
-                                <Text style={styles.textprice}>
-                                    {plants.price} VND
-                                </Text>
-                            </View>
-                        </View>    
-                    </View>
-
-
+                        );
+                            })}
                     
                 </ScrollView>
             </View>
             <View style={styles.total}>
-                <View style = {{flexDirection: 'row',justifyContent: 'space-between',}}>
-                    <Text style= {{
-                        fontSize: 22,
-                        fontFamily: Fonts.POPPINS_REGULAR,
-                        color: Colors.THIRD_GREEN
-                    }}>Subtotal</Text>
-                    <Text style={styles.textprice}>
-                                    ${plants.price}
-                                </Text>
-                </View>
-                
-                <View style = {{flexDirection: 'row',justifyContent: 'space-between',}}>
-                    <Text style= {{
-                            fontSize: 22,
-                            fontFamily: Fonts.POPPINS_REGULAR,
-                            color: Colors.THIRD_GREEN
-                        }}>Shipping cost</Text>
-                    <Text style={styles.textprice}>
-                                        $10.00
-                                    </Text>
-                </View>
-                <View style = {{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: 20,
-                        alignItems: 'center',
-                    }}>
-                    <Text style= {{
-                            fontSize: 24,
-                            fontFamily: Fonts.POPPINS_MEDIUM,
-                            color: Colors.THIRD_GREEN,
-                            fontWeight: '500',
-                            
-                        }}>Total</Text>
-                    <Text style={styles.textprice}>$35.99</Text>
-                </View>
-                <TouchableOpacity style = {styles.order} onPress= {()=> navigation.navigate('CheckOut',plants)}>     
+                <TouchableOpacity style = {styles.order} onPress= {()=> navigation.navigate('CheckOut',token)}>     
                     <Text style= {{ 
                         marginHorizontal: 15,
                         fontSize : 22 , 
@@ -134,8 +131,8 @@ const styles = StyleSheet.create({
         
     },
     card: {
-        backgroundColor: Colors.DEFAULT_WHITE,
-        marginTop: 15,
+        // backgroundColor: Colors.DEFAULT_YELLOW,
+        marginTop: 5,
         marginHorizontal: 15,
         // alignItems: 'center',
     },
@@ -178,15 +175,13 @@ const styles = StyleSheet.create({
     },
     total:{
         backgroundColor: Colors.DEFAULT_WHITE,
-        height: '30%',
+        height: 60,
         position: 'absolute',
         bottom: 0,
         left: 0,
         right:0,
         paddingVertical: 5,
         marginHorizontal: 20,
-        borderTopWidth: 1,
-        borderTopColor: Colors.THIRD_GREEN
     },
     order:{
         borderRadius: 35,
@@ -195,7 +190,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.THIRD_GREEN,
         paddingVertical: 10,
-        marginTop: 10
     }
 })
 export default CartScreen;
