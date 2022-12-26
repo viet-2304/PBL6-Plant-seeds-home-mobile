@@ -63,8 +63,8 @@ export const getCurrentUser = async (token)=>{
 }
 
 export const editUser = async(token,data) =>{
-    console.log(token);
-    console.log(data);
+    // console.log(token);
+    // console.log(data);
     try {
         const res = await api('v1/users/editUser',{
             method: 'POST',
@@ -80,3 +80,50 @@ export const editUser = async(token,data) =>{
     }
 }
 
+export const addtoCart = async(token,data) =>{
+    // console.log(data)
+    try {
+        const res = await api('v1/cart/addToCart',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+            data: data,
+        });
+        return res;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getCartDetail = async (userid,token) =>{
+
+    try {
+        const res = await api(`v1/cart/getCartDetail?userId=${userid}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        return res;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const deleteItemInCart = async (itemId,token) =>{
+    try {
+        const res = await api(`v1/cart/deleteProductInCart?id=${itemId}`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        return res;
+    } catch (error) {
+        return error.response.data;
+    }
+}
