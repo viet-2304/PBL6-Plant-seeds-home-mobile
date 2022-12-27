@@ -81,7 +81,7 @@ export const editUser = async(token,data) =>{
 }
 
 export const addtoCart = async(token,data) =>{
-    // console.log(data)
+
     try {
         const res = await api('v1/cart/addToCart',{
             method: 'POST',
@@ -117,6 +117,22 @@ export const deleteItemInCart = async (itemId,token) =>{
     try {
         const res = await api(`v1/cart/deleteProductInCart?id=${itemId}`,{
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        return res;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getAllOrder = async(token,userid) =>{
+    
+    try {
+        const res = await api(`v1/order/getOrderByUserId?userId=${userid}`,{
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + token,

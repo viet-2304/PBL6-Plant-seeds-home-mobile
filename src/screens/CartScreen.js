@@ -10,8 +10,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../api/api";
 
 const CartScreen = ({navigation,route}) =>{
-    // const plants = route.params;
-    const [allcart,setAllcart] = useState([]);
+
+    const [listcart,setListcart] = useState();
     const [userId,setUserId] = useState('');
     const [token,setToken] = useState('');
 
@@ -21,7 +21,7 @@ const CartScreen = ({navigation,route}) =>{
         }else{
             getCartDetail(userId,token)
             .then(res =>{
-                setAllcart(res.data.listProduct);
+                setListcart(res.data.listProduct);
                 // console.log(res.data.listProduct);
             })
             .catch(err =>{
@@ -29,6 +29,9 @@ const CartScreen = ({navigation,route}) =>{
             })
         }
     },[userId,token]);
+
+    console.log(userId);
+    console.log(token);
     //lay userId & token
     const getuserId = async () =>{
         const id = await AsyncStorage.getItem('userID');
@@ -55,11 +58,11 @@ const CartScreen = ({navigation,route}) =>{
                         alignItems: 'center',
                         marginLeft: 15
                     }}
-                >My Cart</Text>     
+                >Giỏ hàng</Text>     
             </View>
             <View style = {{height: '85%'}}>
                 <ScrollView style={styles.card}>
-                    {allcart?.map((shop)=>{
+                    {listcart?.map((item)=>{
                         let subTotal = 0;
                         return (
                             <View style = {{backgroundColor : Colors.DEFAULT_WHITE,marginBottom: 5}}>
@@ -72,14 +75,14 @@ const CartScreen = ({navigation,route}) =>{
                                     fontWeight: '400',
                                     color: Colors.THIRD_GREY,
                                     paddingHorizontal: 5
-                                }}>{shop?.shopName}</Text>
-                                {shop?.listProductAndNumberDto.map((product)=>{
+                                }}>{item?.shopName}</Text>
+                                {item?.listProductAndNumberDto.map((product)=>{
                                     subTotal +=
                                         product?.price *
                                         parseInt(product?.numberOfProductInCart);
                                     return (
                                         <CartItem 
-                                            plants={product} 
+                                            product={product} 
                                             accessToken={token}
                                             setUserId = {setUserId}
                                             setToken ={setToken}/>   
@@ -96,7 +99,7 @@ const CartScreen = ({navigation,route}) =>{
                                     fontWeight: '400',
                                     paddingHorizontal: 5,
                                     color: Colors.THIRD_GREEN
-                                }}>Total: {subTotal} VND</Text>
+                                }}>Tổng tiền hàng : {subTotal} VND</Text>
                             </View>
                         );
                             })}
@@ -111,7 +114,7 @@ const CartScreen = ({navigation,route}) =>{
                         color: Colors.DEFAULT_WHITE, 
                         fontFamily: Fonts.POPPINS_MEDIUM, 
                         fontWeight: 'bold'
-                    }}>Check Out</Text>
+                    }}>ĐẶT HÀNG</Text>
                 </TouchableOpacity>
             </View>
         </View>

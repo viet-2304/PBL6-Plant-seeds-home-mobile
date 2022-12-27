@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const OrderItemScreen = ({navigation,route}) => {
-    // const plants = route.params;
+    const OrderItem = route.params;
   return (
     <View style = {styles.container}>
         <View style = {styles.header}>
@@ -25,16 +25,55 @@ const OrderItemScreen = ({navigation,route}) => {
                     alignItems: 'center',
                     marginLeft: 15
                 }}
-            >Order Detail</Text>     
+            >Lịch sử đặt hàng</Text>     
         </View>
-        <View style = {{backgroundColor: Colors.DEFAULT_WHITE, paddingHorizontal: 20}}>
+
+        <View style = {styles.address}>
             <Text style={{
                 fontSize: 20,
                 fontFamily: Fonts.POPPINS_MEDIUM,
                 fontWeight: '300',
-                color: Colors.THIRD_GREEN
-            }}>Delivery Address</Text>
-            <TextInput placeholder='Nguyen Luong Bang, Da Nang'editable = {false} style = {styles.address}/>
+                color: Colors.THIRD_GREEN,
+            
+            }}>Ngày đặt : </Text>
+            <Text style = {{fontSize: 20,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '300',
+                color: Colors.THIRD_GREEN,
+
+            }}>
+            {OrderItem.orderResponseDto?.createDate?.split('T')[0]}</Text>
+            
+        </View>
+
+
+        <View style = {{
+            height: '15%',
+            flexDirection: 'column',
+            // alignItems: 'center
+            borderRadius: 10,
+            marginHorizontal: 20,
+            // paddingHorizontal: 10,
+            paddingVertical: 5,
+        }}>
+            <Text style={{
+                fontSize: 20,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '300',
+                color: Colors.THIRD_GREEN,
+            
+            }}>Địa chỉ : </Text>
+            <Text style = {{fontSize: 20,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '300',
+                color: Colors.THIRD_GREEN,
+                borderRadius: 10,
+                backgroundColor: Colors.THIRD_WHITE,
+                paddingHorizontal: 10,
+            paddingVertical: 5,
+            }}>
+            {OrderItem.orderResponseDto?.address}</Text>
+            
         </View>
         
         <Text style={{
@@ -42,121 +81,108 @@ const OrderItemScreen = ({navigation,route}) => {
             fontSize: 20,
             fontFamily: Fonts.POPPINS_MEDIUM,
             fontWeight: '300',
-            color: Colors.THIRD_GREEN
-        }}>Order List</Text>
-        <View style = {{height: '35%'}}>
+            color: Colors.THIRD_GREEN,
+        }}>Danh sách sản phẩm</Text>
+        <View style = {{height: '50%',backgroundColor: Colors.DEFAULT_WHITE}}>
                 <ScrollView style={styles.card}>
-                    <View style={styles.cardItem}>
-                        <View style={styles.cardImage}>
-                            <Image
-                                source={Images.Plant}
-                                style={{flex: 1, resizeMode: 'contain'}}
-                            />
-                        </View>
-                        <View style = {{width: '70%',flexDirection: 'column',paddingHorizontal:10}}>
-                            <View style={{flexDirection: 'row',justifyContent: 'space-between', marginVertical: 10}}>
-                                <Text style={styles.plantName}>
-                                        Dragon Plant
-                                </Text>
-                            </View>
-                            <View style={{marginVertical: 5,flexDirection: 'row',justifyContent:'space-between',alignItems:'center'}}>
-                                
-                                <Text 
-                                    style={{
-                                        fontSize: 20,
-                                        color: Colors.THIRD_GREEN,
-                                        borderWidth: 1.5,
-                                        borderColor: Colors.THIRD_GREEN,
-                                        borderRadius: 8,
-                                        paddingHorizontal: 8
-                                    }}
-                                    >1
-                                </Text>
-                                
-                                <Text style={styles.textprice}>
-                                    $30.00
-                                </Text>
-                            </View>
-                        </View>    
-                    </View>
+                    {OrderItem.listProduct?.map((product)=>{
+                        const image= product.imagesUrl ? product.imagesUrl[0] : '';
+                        return (
+                            <View style={styles.cardItem}>
+                                <View style={styles.cardImage}>
+                                    <Image source={{uri: image}}
+                                    style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
+                                </View>
+                                <View style = {{width: '70%',flexDirection: 'column'}}>
+                                    <View style={{ marginVertical: 5, marginHorizontal: 5}}>
+                                        <Text style={styles.plantName}>
+                                                {product.productName}
+                                        </Text>
+
+                                    </View>
+                                    <View style={{marginVertical: 0,flexDirection: 'column',alignItems:'flex-start'}}>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            width: '100%'
+                                            }}>
+
+                                            <Text 
+                                                style={{
+                                                    fontSize: 18,
+                                                    color: Colors.THIRD_GREEN,
+                                                    paddingHorizontal: 8
+                                                }}
+                                            >Số lượng : </Text>
+                                            <Text 
+                                                style={{
+                                                    fontSize: 18,
+                                                    color: Colors.THIRD_GREEN,
+                                                    paddingHorizontal: 8
+                                                }}
+                                            >{product.number}</Text>
+                                        </View>
+                                        
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            width: '100%'
+                                        }}>
+                                            <Text 
+                                                style={{
+                                                    fontSize: 18,
+                                                    color: Colors.THIRD_GREEN,
+                                                    paddingHorizontal: 8
+                                                }}
+                                            >Tổng tiền</Text>
+                                            <Text 
+                                                style={{
+                                                    fontSize: 18,
+                                                    color: Colors.THIRD_GREEN,
+                                                    paddingHorizontal: 8
+                                                }}
+                                            >{product.total} VND</Text>
+                                            
+                                        </View>
+                                        
+                                    </View>
+                                </View>    
+                            </View>   
+
+                        );
+                    })}
                 </ScrollView>
         </View>
-        
 
-        <Text style={{
-                marginHorizontal:20,
-                marginTop: 5,
-                fontSize: 20,
-                fontFamily: Fonts.POPPINS_MEDIUM,
-                fontWeight: '300',
-                color: Colors.THIRD_GREEN
-            }}>Payment Method</Text>
-
-        <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginHorizontal: 20,
-            // borderWidth: 1,
-            // borderColor: Colors.THIRD_GREEN,
+        <Text style = {{
             borderRadius: 10,
-            paddingHorizontal: 15,
-            paddingVertical: 8,
-            alignItems: 'center',
+            marginVertical: 5,
             backgroundColor: Colors.THIRD_WHITE,
-        }}> 
-            <Text style={{
-                fontSize: 20,
-                fontFamily: Fonts.POPPINS_MEDIUM,
-                fontWeight: '300',
-                color: Colors.THIRD_GREEN
-            }}>By cash</Text>
-        </View>
+            paddingHorizontal: 15,
+            paddingVertical: 10,
+            fontSize: 18,
+            marginHorizontal:20,
+            color: Colors.THIRD_GREEN
+        }}>{OrderItem?.orderResponseDto.paymentMethod}</Text>
 
         <View style={styles.total}>
-                <View style = {{flexDirection: 'row',justifyContent: 'space-between',}}>
-                    <Text style= {{
-                        fontSize: 20,
-                        fontFamily: Fonts.POPPINS_REGULAR,
-                        color: Colors.THIRD_GREEN
-                    }}>Subtotal</Text>
-                    <Text style={styles.textprice}>
-                                    $30.00
-                                </Text>
-                </View>
                 
-                <View style = {{flexDirection: 'row',justifyContent: 'space-between',}}>
-                    <Text style= {{
-                            fontSize: 20,
-                            fontFamily: Fonts.POPPINS_REGULAR,
-                            color: Colors.THIRD_GREEN
-                        }}>Shipping cost</Text>
-                    <Text style={styles.textprice}>
-                                        $10.00
-                                    </Text>
-                </View>
-                <View style = {{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginTop: 5,
-                        alignItems: 'center',
-                        borderTopWidth: 1,
-                        borderTopColor: Colors.THIRD_GREEN
-                    }}>
-                    <Text style= {{
-                            fontSize: 24,
-                            fontFamily: Fonts.POPPINS_MEDIUM,
-                            color: Colors.THIRD_GREEN,
-                            fontWeight: '500',
-                            
-                        }}>Total</Text>
-                    <Text style={{
-                        fontSize: 24,
-                        color: Colors.THIRD_GREEN,
-                        fontFamily: Fonts.POPPINS_MEDIUM,
-                        fontWeight: '500'
-                    }}>$40.00</Text>
-                </View>
-            </View>
+            <Text style= {{
+                fontSize: 24,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                color: Colors.THIRD_GREEN,
+                fontWeight: '500',
+                    
+            }}>Tổng tiền</Text>
+            <Text style={{
+                fontSize: 24,
+                color: Colors.THIRD_GREEN,
+                fontFamily: Fonts.POPPINS_MEDIUM,
+                fontWeight: '500'
+
+            }}>{OrderItem?.orderResponseDto.total}</Text>
+                
+        </View>
     </View>
   )
 }
@@ -176,17 +202,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 15,
         alignItems: 'center',
-        marginBottom: 15,
+        marginBottom: 10,
     },
     address:{
-        // borderWidth: 1,
-        // borderColor: Colors.THIRD_GREEN,
-        borderRadius: 10,
-        marginVertical: 10,
         backgroundColor: Colors.THIRD_WHITE,
-        paddingHorizontal: 15,
-        fontSize: 18
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between', 
+        borderRadius: 10,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        marginVertical: 5
     },
+
     card: {
         backgroundColor: Colors.DEFAULT_WHITE,
         marginTop: 0,
@@ -220,36 +249,25 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
         fontWeight: 'bold', 
-        fontSize: 22,
+        fontSize: 18,
     },
     
     textprice:{
         fontFamily: Fonts.POPPINS_MEDIUM,
         color: Colors.THIRD_GREEN,
-        fontSize: 20, 
+        fontSize: 18, 
         fontWeight: '500',
-        marginLeft: 20
+        paddingHorizontal: 8
     },
-    total:{
-        // backgroundColor: Colors.DEFAULT_YELLOW,
-        // height: '30%',
-        // position: 'absolute',
-        // bottom: 0,
-        // left: 0,
-        // right:0,
-        marginTop: 15,
+    total:{     
         paddingVertical: 5,
         marginHorizontal: 20,
-        // borderTopWidth: 1,
-        // borderTopColor: Colors.THIRD_GREEN
-    },
-    order:{
-        borderRadius: 35,
-        height: 50,
-        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 5,
         alignItems: 'center',
-        backgroundColor: Colors.THIRD_GREEN,
-        paddingVertical: 10,
-        marginTop: 10
-    }
+        borderTopWidth: 1,
+        borderTopColor: Colors.THIRD_GREEN
+    },
+
 })

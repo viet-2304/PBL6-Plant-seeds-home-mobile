@@ -19,6 +19,7 @@ import { color } from '@rneui/base';
 import CartScreen from './src/screens/CartScreen';
 import OrderItemScreen from './src/screens/OrderItemScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import PaymentMethodScreen from './src/screens/PaymentMethodScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,6 +78,7 @@ function App() {
         <Stack.Screen name="CheckOut" component={CheckOutScreen} />
         <Stack.Screen name="OrderTab" component={MyTab} />
         <Stack.Screen name="OrderDetail" component={OrderItemScreen} />
+        <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

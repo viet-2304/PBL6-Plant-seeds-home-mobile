@@ -25,14 +25,14 @@ const SignInScreeen = ({navigation}) => {
                     alignItems: 'center',
                     marginLeft: 15
                 }}
-            >Change Password</Text>     
+            >Thay đổi mật khẩu</Text>     
         </View>
         
         <View style={{width: '100%'}}>
             
-            <TextInput placeholder='Current Password' style ={styles.textInput} />
-            <TextInput placeholder='New Password' style ={styles.textInput}/>
-            <TextInput placeholder='Re-enter New Password' style ={styles.textInput}/>
+            <TextInput placeholder='Mật khẩu hiện tại' style ={styles.textInput} />
+            <TextInput placeholder='Mật khẩu mới' style ={styles.textInput}/>
+            <TextInput placeholder='Xác nhận mật khẩu mới' style ={styles.textInput}/>
             
         </View>
         
@@ -43,7 +43,7 @@ const SignInScreeen = ({navigation}) => {
                         color: Colors.DEFAULT_WHITE, 
                         fontFamily: Fonts.POPPINS_MEDIUM, 
                         fontWeight: 'bold'
-                    }}>Save</Text>
+                    }}>Lưu</Text>
                 </TouchableOpacity>
             </View>
     </View>

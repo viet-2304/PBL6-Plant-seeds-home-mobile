@@ -8,12 +8,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const DetailsScreen = ({navigation,route}) => {
-    const plant = route.params;
-    
+    const {plant} = route.params;
     const [quantity, setQuantity] = useState(1);
     const [userId,setUserId] = useState('');
     const [token,setToken] = useState('');
-
+    const image= plant.imagesUrl ? plant.imagesUrl[0] : '';
     //ham tang giam so luong
     const handleQuantity= (type) =>{
         if(type === 'down'){
@@ -44,14 +43,13 @@ const DetailsScreen = ({navigation,route}) => {
             number: quantity,
             userId: userId,
             productId: plant.productId,
-        }).then(res =>{
-            alert('Thêm vào giỏ hàng thành công!');
+        }).then(async (res) =>{
+            alert('Thêm vào giỏ hàng thành công!');            
+            navigation.replace('CartTab');
         })
         .catch(err =>{
             console.error(err);
         })
-
-        // navigation.navigate('Cart',plant);
     }
 
     return (
@@ -66,7 +64,8 @@ const DetailsScreen = ({navigation,route}) => {
                 
             </View>
             <View style = {styles.imageContain}>
-                <Image source={Images.Plant} style = {styles.image}/>
+                <Image source={{uri: image}}
+                    style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
             </View>
 
             <View style = {styles.detailContain}>
@@ -160,11 +159,9 @@ const styles = StyleSheet.create({
     imageContain:{
         flex: 0.40,
         alignItems: 'center',
+        
     },
-    image:{
-        flex: 1,
-        resizeMode: 'contain'
-    },
+    
     detailContain:{
         flex: 0.60,
         backgroundColor: Colors.DEFAULT_WHITE,
