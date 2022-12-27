@@ -62,6 +62,17 @@ const CartScreen = ({navigation,route}) =>{
             </View>
             <View style = {{height: '85%'}}>
                 <ScrollView style={styles.card}>
+                    {!listcart && (
+                        <Text style={{
+                            fontFamily: Fonts.POPPINS_MEDIUM,
+                            fontSize: 20,
+                            fontWeight: '500',
+                            color: Colors.THIRD_GREEN,
+                            alignItems: 'center',
+                            marginLeft: 15,
+                            marginTop: 10,
+                        }}> Your Cart Is Empty</Text>       
+                    )}
                     {listcart?.map((item)=>{
                         let subTotal = 0;
                         return (
@@ -107,7 +118,18 @@ const CartScreen = ({navigation,route}) =>{
                 </ScrollView>
             </View>
             <View style={styles.total}>
-                <TouchableOpacity style = {styles.order} onPress= {()=> navigation.navigate('CheckOut',token)}>     
+                {!listcart ?(
+                    <TouchableOpacity style = {styles.orderDisable} onPress= {()=> navigation.navigate('CheckOut',token)}>     
+                        <Text style= {{ 
+                            marginHorizontal: 15,
+                            fontSize : 22 , 
+                            color: Colors.DEFAULT_WHITE, 
+                            fontFamily: Fonts.POPPINS_MEDIUM, 
+                            fontWeight: 'bold'
+                        }}>ĐẶT HÀNG</Text>
+                    </TouchableOpacity>
+                ):(
+                    <TouchableOpacity style = {styles.order} onPress= {()=> navigation.navigate('CheckOut',token)}>     
                     <Text style= {{ 
                         marginHorizontal: 15,
                         fontSize : 22 , 
@@ -115,7 +137,9 @@ const CartScreen = ({navigation,route}) =>{
                         fontFamily: Fonts.POPPINS_MEDIUM, 
                         fontWeight: 'bold'
                     }}>ĐẶT HÀNG</Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                )}
+                
             </View>
         </View>
     )
@@ -192,6 +216,14 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         backgroundColor: Colors.THIRD_GREEN,
+        paddingVertical: 10,
+    },
+    orderDisable:{
+        borderRadius: 35,
+        height: 50,
+        width: '100%',
+        alignItems: 'center',
+        backgroundColor: Colors.THIRD_GREY,
         paddingVertical: 10,
     }
 })

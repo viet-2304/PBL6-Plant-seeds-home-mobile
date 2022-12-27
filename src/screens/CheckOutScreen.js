@@ -1,4 +1,4 @@
-import { StyleSheet,KeyboardAvoidingView,Image , Text, View,StatusBar,TextInput ,TouchableOpacity,ScrollView} from 'react-native'
+import { StyleSheet,KeyboardAvoidingView,Image,Linking , Text, View,StatusBar,TextInput ,TouchableOpacity,ScrollView} from 'react-native'
 import React ,{useState,useEffect} from 'react'
 import { Colors ,Images,Fonts} from "../contants"
 import { Separator } from '../components'
@@ -15,7 +15,7 @@ const CheckOutScreen = ({navigation}) => {
     const [userId,setUserId] = useState('');
     const [token,setToken] = useState('');
 
-    const [paymentMethod, setPaymentMethod] = useState('paypal');
+    const [paymentMethod, setPaymentMethod] = useState('tiền mặt');
     const [address, setAddress] = useState('');
     let sum = 0;
     let listCartId = [];
@@ -34,6 +34,7 @@ const CheckOutScreen = ({navigation}) => {
             })
         }
     },[userId,token]);
+    
     //lay userId & token
     const getuserId = async () =>{
         const id = await AsyncStorage.getItem('userID');
@@ -69,8 +70,12 @@ const CheckOutScreen = ({navigation}) => {
                 },
             )
                 .then((res) => {
-                    // window.location.href = res.data;
-                    alert('Thanh toán bằng paypal thành công!');
+                    
+                    // alert('Thanh toán bằng paypal thành công!');
+                    Linking.openURL(res.data)
+                    .catch(err => {
+                        console.error("Couldn't load page", err);
+                    })
                     navigation.replace('CartTab');
                     console.log(res.data);
                 })
