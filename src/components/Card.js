@@ -4,14 +4,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors ,Fonts,Images} from '../contants';
 
 const Card = ({plant,navigation}) => {
-  const image= plant.imagesUrl ? plant.imagesUrl[0] : ''
+  const image= plant.imagesUrl ? plant.imagesUrl[0] : "";
     return (
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={() => navigation.navigate('Detail',{plant})}>
         <View style={styles.card}>
           <View style={styles.cardImage}>
-            <Image source={{uri: image}}
+            <Image source={{uri: image !=="" ? image: undefined }}
               style={{ resizeMode: 'contain',height: 150,width: 150}} />
 
           </View>

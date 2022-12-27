@@ -12,7 +12,9 @@ const DetailsScreen = ({navigation,route}) => {
     const [quantity, setQuantity] = useState(1);
     const [userId,setUserId] = useState('');
     const [token,setToken] = useState('');
-    const image= plant.imagesUrl ? plant.imagesUrl[0] : '';
+
+    const image= plant.imagesUrl ? plant.imagesUrl[0] : "";
+
     //ham tang giam so luong
     const handleQuantity= (type) =>{
         if(type === 'down'){
@@ -64,7 +66,7 @@ const DetailsScreen = ({navigation,route}) => {
                 
             </View>
             <View style = {styles.imageContain}>
-                <Image source={{uri: image}}
+                <Image source={{uri: image!=="" ? image: undefined }}
                     style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
             </View>
 

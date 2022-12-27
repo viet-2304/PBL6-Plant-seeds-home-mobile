@@ -170,8 +170,7 @@ const CheckOutScreen = ({navigation}) => {
 
                                     {item?.listProductAndNumberDto.map((product)=>{
                                         listCartId.push(product.cartId);
-                                        const image= product.imagesUrl ? product.imagesUrl[0] : '';
-                                        console.log(image);
+                                        const image= product.imagesUrl ? product.imagesUrl[0] : "";
 
                                         //suntotal la tong tien cua mot san pham
                                         let subTotal =
@@ -186,7 +185,7 @@ const CheckOutScreen = ({navigation}) => {
                                         return (
                                             <View style={styles.cardItem}>
                                                 <View style={styles.cardImage}>
-                                                    <Image source={{uri: image}}
+                                                    <Image source={{uri: image!=="" ? image: undefined }}
                                                         style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
                                                 </View>
                                                 <View style = {{width: '70%',flexDirection: 'column'}}>
