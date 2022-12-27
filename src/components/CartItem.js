@@ -5,12 +5,14 @@ import { Colors ,Fonts,Images} from '../contants';
 import { deleteItemInCart } from '../api/user_api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CartItem = ({plants,accessToken,setUserId,setToken})=>{
+const CartItem = ({product,accessToken,setUserId,setToken})=>{
     const token = accessToken;
-    const itemId = plants.cartId;
+    const itemId = product.cartId;
     const setUserID = setUserId;
     const setAccessToken = setToken;
 
+    const image = product.imagesUrl ? product.imagesUrl[0] : '';
+    console.log(image);
     //ham xoa san pham khoi gio hang   
     const deleteProductInCart =() =>{
         deleteItemInCart(itemId,token)
@@ -26,15 +28,13 @@ const CartItem = ({plants,accessToken,setUserId,setToken})=>{
     return(
         <View style={styles.cardItem}>
             <View style={styles.cardImage}>
-                <Image
-                    style={{flex: 1, resizeMode: 'contain'}}
-                    source= {Images.Plant}
-                />
+                <Image source={{uri: image}}
+                    style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
             </View>
             <View style = {{width: '70%',flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row',justifyContent: 'space-evenly', marginVertical: 10, marginHorizontal: 5}}>
                     <Text style={styles.plantName}>
-                            {plants.productName}
+                            {product.productName}
                     </Text>
                     <Ionicons name="trash" size={24} 
                         onPress={()=> deleteProductInCart()}
@@ -52,11 +52,11 @@ const CartItem = ({plants,accessToken,setUserId,setToken})=>{
                             borderRadius: 8,
                             paddingHorizontal: 8
                         }}
-                        >{plants.numberOfProductInCart}
+                        >{product.numberOfProductInCart}
                     </Text>
                     <Ionicons name="add"size={24}style={{color: Colors.THIRD_GREEN}}/>
                     <Text style={styles.textprice}>
-                        {plants.price} VND
+                        {product.price} VND
                     </Text>
                 </View>
             </View>    

@@ -7,12 +7,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getCartDetail } from '../api/user_api'
 import CartItem from "../components/CartItem";
+import api from '../api/api'
+
 
 const CheckOutScreen = ({navigation}) => {
-    const [allcart,setAllcart] = useState([]);
+    const [listcart,setlistcart] = useState([]);
     const [userId,setUserId] = useState('');
     const [token,setToken] = useState('');
-    const payment = ["cash", "paypal"];
+
+    const [paymentMethod, setPaymentMethod] = useState('paypal');
+    const [address, setAddress] = useState('');
+    let sum = 0;
+    let listCartId = [];
 
     useEffect(()=>{
         if(userId == '' || token == ''){
@@ -20,7 +26,7 @@ const CheckOutScreen = ({navigation}) => {
         }else{
             getCartDetail(userId,token)
             .then(res =>{
-                setAllcart(res.data.listProduct);
+                setlistcart(res.data.listProduct);
                 // console.log(res.data.listProduct);
             })
             .catch(err =>{
@@ -36,6 +42,65 @@ const CheckOutScreen = ({navigation}) => {
         const tk = await AsyncStorage.getItem('AccessToken');
         setToken(tk);
     };
+
+    const handlePayment=(total) =>{
+        if (paymentMethod == 'paypal'){
+            console.log(paymentMethod);
+            api.post(
+                'v1/payment/pay',
+                {
+                    price: total,
+                    currency: '',
+                    method: 'paypal',
+                    intent: '',
+                    description: 'test post man',
+                    order: {
+                        listCartId: listCartId,
+                        total: total,
+                        paymentMethodId: 1,
+                        address: address,
+                    },
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                },
+            )
+                .then((res) => {
+                    // window.location.href = res.data;
+                    alert('Thanh toán bằng paypal thành công!');
+                    navigation.replace('CartTab');
+                    console.log(res.data);
+                })
+                .catch((err) => console.log('err', err));
+        }
+        else{
+            console.log(paymentMethod);
+            api.post(
+                'v1/order/createOrder',
+                {
+                    listCartId: listCartId,
+                    total: total,
+                    paymentMethodId: 2,
+                    address: address,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                },
+            )
+                .then((res) => {
+                    alert('Thanh toán thành công!');
+                    navigation.replace('CartTab');
+                    console.log(res.data);
+                })
+                .catch((err) => console.log('err', err));
+        }
+    }
   return (
     <View style = {styles.container}>
         <View style = {styles.header}>
@@ -54,7 +119,7 @@ const CheckOutScreen = ({navigation}) => {
                     alignItems: 'center',
                     marginLeft: 15
                 }}
-            >Check Out</Text>     
+            >Đặt hàng</Text>     
         </View>
         <View style={{height:'90%',width: '100%',position: 'relative'}}>
             <KeyboardAvoidingView >
@@ -64,20 +129,29 @@ const CheckOutScreen = ({navigation}) => {
                     fontWeight: '300',
                     color: Colors.THIRD_GREEN,
                     paddingHorizontal: 20
-                }}>Delivery Address</Text>
-                <TextInput placeholder='Address' style = {styles.address}/>
+                }}>Địa chỉ giao hàng</Text>
+                <TextInput 
+                    placeholder='Địa chỉ' 
+                    value={address}
+                    onChangeText={newText => setAddress(newText)}
+                    style = {styles.address}/>
                 <Text style={{
                     marginHorizontal:20,
                     fontSize: 20,
                     fontFamily: Fonts.POPPINS_MEDIUM,
                     fontWeight: '300',
                     color: Colors.THIRD_GREEN
-                }}>Order List</Text>
+                }}>Danh sách sản phẩm</Text>
                 <ScrollView style={styles.card}>
-                    {allcart?.map((shop)=>{
-                            let subTotal = 0;
+                    {listcart?.map((item)=>{
+                            let subTotalByShop = 0;
+                            let subFee = 30000;
                             return (
-                                <View style = {{backgroundColor : Colors.DEFAULT_WHITE,marginBottom: 5}}>
+                                <View style = {{
+                                    backgroundColor : Colors.DEFAULT_WHITE,
+                                    marginBottom: 5,
+                                    borderColor: Colors.THIRD_GREEN,
+                                    borderWidth: 1}}>
                                     <Text style ={{
                                         borderBottomColor: Colors.THIRD_GREEN,
                                         borderBottomWidth: 1,
@@ -87,45 +161,117 @@ const CheckOutScreen = ({navigation}) => {
                                         fontWeight: '400',
                                         color: Colors.THIRD_GREY,
                                         paddingHorizontal: 5
-                                    }}>{shop?.shopName}</Text>
-                                    {shop?.listProductAndNumberDto.map((product)=>{
-                                        subTotal +=
+                                    }}>{item?.shopName}</Text>
+
+                                    {item?.listProductAndNumberDto.map((product)=>{
+                                        listCartId.push(product.cartId);
+                                        const image= product.imagesUrl ? product.imagesUrl[0] : '';
+                                        console.log(image);
+
+                                        //suntotal la tong tien cua mot san pham
+                                        let subTotal =
                                             product?.price *
                                             parseInt(product?.numberOfProductInCart);
+                                        
+                                        //subtotalByShop la tong tien cua mot shop
+                                        subTotalByShop += subTotal;
+                                        subFee += subTotal;
+
+                                        
                                         return (
-                                            <CartItem 
-                                                plants={product} 
-                                                accessToken={token}
-                                                setUserId = {setUserId}
-                                                setToken ={setToken}/>   
+                                            <View style={styles.cardItem}>
+                                                <View style={styles.cardImage}>
+                                                    <Image source={{uri: image}}
+                                                        style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
+                                                </View>
+                                                <View style = {{width: '70%',flexDirection: 'column'}}>
+                                                    <View style={{ marginVertical: 10, marginHorizontal: 5}}>
+                                                        <Text style={styles.plantName}>
+                                                                {product.productName}
+                                                        </Text>
+        
+                                                    </View>
+                                                    <View style={{marginVertical: 0,flexDirection: 'row',justifyContent:'space-between',alignItems:'center'}}>
+                                                        
+                                                        <Text 
+                                                            style={{
+                                                                fontSize: 20,
+                                                                color: Colors.THIRD_GREEN,
+                                                                borderWidth: 1.5,
+                                                                borderColor: Colors.THIRD_GREEN,
+                                                                borderRadius: 8,
+                                                                paddingHorizontal: 8
+                                                            }}
+                                                            >{product.numberOfProductInCart}
+                                                        </Text>
+                                                        
+                                                        <Text style={styles.textprice}>
+                                                            {subTotal} VND
+                                                        </Text>
+                                                    </View>
+                                                </View>    
+                                            </View>   
                                         );
                                     })}
                                     
+                                    {/* sum += subFee; */}
+                                    <Text style= {{
+                                        display: 'none'
+                                    }}>{sum += subFee} </Text>
 
                                     <Text style= {{
-                                        borderTopColor: Colors.THIRD_GREEN,
-                                        borderTopWidth: 1,
-                                        marginTop: 5,
+                                        // borderTopColor: Colors.THIRD_GREEN,
+                                        // borderTopWidth: 1,
+                                        marginTop: 0,
+                                        fontFamily: Fonts.POPPINS_MEDIUM,
+                                        fontSize: 16,
+                                        fontWeight: '400',
+                                        paddingHorizontal: 5,
+                                        color: Colors.THIRD_GREEN
+                                    }}>Tiền hàng : {subTotalByShop} VND</Text>
+                                    <Text style= {{
+                                        // borderTopColor: Colors.THIRD_GREEN,
+                                        // borderTopWidth: 1,
+                                        marginTop: 0,
+                                        fontFamily: Fonts.POPPINS_MEDIUM,
+                                        fontSize: 16,
+                                        fontWeight: '400',
+                                        paddingHorizontal: 5,
+                                        color: Colors.THIRD_GREEN
+                                    }}>Phí ship: 30000 VND</Text>
+                                    
+                                    <Text style= {{
+                                        // borderTopColor: Colors.THIRD_GREEN,
+                                        // borderTopWidth: 1,
+                                        marginTop: 0,
                                         fontFamily: Fonts.POPPINS_MEDIUM,
                                         fontSize: 18,
                                         fontWeight: '400',
                                         paddingHorizontal: 5,
                                         color: Colors.THIRD_GREEN
-                                    }}>Total: {subTotal} VND</Text>
+                                    }}>Tổng: {subFee} VND</Text>
                                 </View>
                             );
                         })}
                 </ScrollView>
-
-                <Text style={{
-                    marginHorizontal:20,
-                    marginTop: 5,
-                    fontSize: 20,
-                    fontFamily: Fonts.POPPINS_MEDIUM,
-                    fontWeight: '300',
-                    color: Colors.THIRD_GREEN
-                }}>Payment Method</Text>
-
+                <TouchableOpacity 
+                    style={styles.paymentMethod}
+                    onPress={()=> navigation.navigate('PaymentMethod',setPaymentMethod)}
+                >
+                    <Text style={{
+                        fontSize: 20,
+                        fontFamily: Fonts.POPPINS_MEDIUM,
+                        fontWeight: '300',
+                        color: Colors.THIRD_GREEN,
+                    }}>Thanh toán bằng {paymentMethod}</Text>
+                    <Ionicons 
+                        name='chevron-forward' 
+                        size={35} 
+                        style = {{color: Colors.THIRD_GREEN}}
+                    />
+                </TouchableOpacity>
+                
+                
                 <View style = {styles.countTotal}>
                     <Text style= {{
                             fontSize: 20,
@@ -133,19 +279,38 @@ const CheckOutScreen = ({navigation}) => {
                             color: Colors.THIRD_GREEN,
                             fontWeight: '500',
                             
-                        }}>Total</Text>
-                    <Text style={styles.textprice}>$35.99</Text>
+                        }}>Tổng tiền </Text>
+                    <Text style={styles.textprice}>{sum}</Text>
                 </View>
                 <View style = {{top: 0,alignItems:'center',marginHorizontal: 10}}>
-                    <TouchableOpacity style = {styles.order} >     
-                        <Text style= {{ 
-                            marginHorizontal: 15,
-                            fontSize : 20 , 
-                            color: Colors.DEFAULT_WHITE, 
-                            fontFamily: Fonts.POPPINS_MEDIUM, 
-                            fontWeight: 'bold'
-                        }}>Payment</Text>
-                    </TouchableOpacity>
+                    {
+                        address =='' ?(
+                            <TouchableOpacity 
+                                style = {styles.orderDisable}
+                                onPress={()=> handlePayment(sum)} >     
+                                <Text style= {{ 
+                                    marginHorizontal: 15,
+                                    fontSize : 20 , 
+                                    color: Colors.DEFAULT_WHITE, 
+                                    fontFamily: Fonts.POPPINS_MEDIUM, 
+                                    fontWeight: 'bold'
+                                }}>THANH TOÁN</Text>
+                            </TouchableOpacity>
+                        ) :(
+                            <TouchableOpacity 
+                                style = {styles.order}
+                                onPress={()=> handlePayment(sum)} >     
+                                <Text style= {{ 
+                                    marginHorizontal: 15,
+                                    fontSize : 20 , 
+                                    color: Colors.DEFAULT_WHITE, 
+                                    fontFamily: Fonts.POPPINS_MEDIUM, 
+                                    fontWeight: 'bold'
+                                }}>THANH TOÁN</Text>
+                            </TouchableOpacity>
+                        )
+                    }
+                    
                 </View>
             </KeyboardAvoidingView>
         </View>
@@ -181,11 +346,53 @@ const styles= StyleSheet.create({
         marginHorizontal: 20,
     },
     card: {
-        backgroundColor: Colors.DEFAULT_YELLOW,
+        backgroundColor: Colors.DEFAULT_WHITE,
         marginTop: 0,
         marginHorizontal: 15,
         // alignItems: 'center',
         height: '65%',
+    },
+    cardItem:{
+        height: 100,
+        width: '100%',
+        // backgroundColor: Colors.THIRD_WHITE,
+        flexDirection: 'row', 
+        // borderRadius: 10,
+        borderBottomColor: Colors.THIRD_GREEN,
+        borderBottomWidth: 1,
+        marginBottom: 5,
+        // marginHorizontal: 5
+    },
+    cardImage:{
+        height: 80,
+        width: 80,
+        alignItems: 'center',
+        borderRadius: 10,
+        borderColor: Colors.THIRD_GREEN,
+        borderWidth: 1,
+        // backgroundColor: Colors.THIRD_LIGHT_GREEN,
+        marginHorizontal:10,
+        marginVertical: 10
+    },
+    price:{
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginVertical: 10,
+        marginHorizontal:10,
+    },
+    plantName:{
+        fontFamily: Fonts.POPPINS_MEDIUM,
+        color: Colors.THIRD_GREEN,
+        fontWeight: 'bold', 
+        fontSize: 16,
+    },
+    
+    textprice:{
+        fontFamily: Fonts.POPPINS_MEDIUM,
+        color: Colors.THIRD_GREEN,
+        fontSize: 22, 
+        fontWeight: '500',
+        marginLeft: 20
     },
     countTotal:{
         flexDirection: 'row',
@@ -203,6 +410,17 @@ const styles= StyleSheet.create({
         fontWeight: '500',
         marginLeft: 20
     },
+    paymentMethod:{
+        // borderWidth: 1,
+        backgroundColor: Colors.THIRD_WHITE,
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        marginHorizontal:20,
+        marginTop: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
     order:{
         borderRadius: 35,
         height: 50,
@@ -211,5 +429,14 @@ const styles= StyleSheet.create({
         backgroundColor: Colors.THIRD_GREEN,
         paddingVertical: 10,
         marginTop: 10,
-    }
+    },
+    orderDisable:{
+        borderRadius: 35,
+        height: 50,
+        width: '100%',
+        alignItems: 'center',
+        backgroundColor: Colors.THIRD_GREY,
+        paddingVertical: 10,
+        marginTop: 10,
+    },
 })

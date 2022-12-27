@@ -57,7 +57,7 @@ const AccountScreen = ({navigation})=> {
                         alignItems: 'center',
                         marginLeft: 15
                     }}
-                >Profile</Text>     
+                >Tài khoản</Text>     
             </View>
             <View style = {styles.Avatar}>
                 <Image source={Images.AvatarImage} style= {styles.ImageAvatar}/>
@@ -73,7 +73,7 @@ const AccountScreen = ({navigation})=> {
                             flexDirection: 'row',}}
                         onPress = {()=> handleEditUser()}>
                         <Ionicons name='create-outline' size={30} style={{color: Colors.THIRD_GREEN}}/>
-                        <Text style={styles.funtionText}>Edit Profile</Text>    
+                        <Text style={styles.funtionText}>Chỉnh sửa thông tin</Text>    
                     </TouchableOpacity>
                     
                 </View>
@@ -84,7 +84,7 @@ const AccountScreen = ({navigation})=> {
                             flexDirection: 'row',}}
                         onPress = {()=> navigation.navigate('ChangePass')}>
                         <Ionicons name='key-outline' size={30} style={{color: Colors.THIRD_GREEN}}/>
-                        <Text style={styles.funtionText}>Change Password</Text>    
+                        <Text style={styles.funtionText}>Thay đổi mật khẩu </Text>    
                     </TouchableOpacity>
                 </View>
 
@@ -102,7 +102,7 @@ const AccountScreen = ({navigation})=> {
                                 fontSize: 20,
                                 color: Colors.DEFAULT_RED,
                                 marginHorizontal: 15}}
-                            >Log Out</Text>
+                            >Đăng xuất</Text>
                     </TouchableOpacity>
                     
                 </View>

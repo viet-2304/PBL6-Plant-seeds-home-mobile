@@ -70,7 +70,7 @@ const SignInScreeen = ({navigation,route}) => {
                     alignItems: 'center',
                     marginLeft: 15
                 }}
-            >EDIT PROFILE</Text>     
+            >Chỉnh sửa thông tin</Text>     
         </View>
         
         <View style={{height:'90%',width: '100%',position: 'relative'}}>
@@ -82,21 +82,21 @@ const SignInScreeen = ({navigation,route}) => {
                     onChangeText={newText => setEmail(newText)}
                     style ={styles.textInput}/>
                 
-                <Text style ={styles.text}>UserName:</Text>
+                <Text style ={styles.text}>Tên tài khoản:</Text>
                 
                 <TextInput 
                     value={username} 
                     onChangeText={newText => setUsername(newText)}
                     style ={styles.textInput}/>
                 
-                <Text style ={styles.text}>Phone:</Text>
+                <Text style ={styles.text}>Điện thoại:</Text>
                 
                 <TextInput 
                     value={phone}
                     onChangeText={newText => setPhone(newText)} 
                     style ={styles.textInput}/>
 
-                <Text style ={styles.text}>Address:</Text>
+                <Text style ={styles.text}>Địa chỉ:</Text>
 
                 <TextInput 
                     value={address} 
@@ -112,7 +112,7 @@ const SignInScreeen = ({navigation,route}) => {
                             color: Colors.DEFAULT_WHITE, 
                             fontFamily: Fonts.POPPINS_MEDIUM, 
                             fontWeight: 'bold'
-                        }}>Save</Text>
+                        }}>Lưu thông tin</Text>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>
