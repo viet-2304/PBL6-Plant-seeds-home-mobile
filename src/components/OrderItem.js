@@ -3,7 +3,7 @@ import {StyleSheet,View, TouchableOpacity,Image,Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors ,Fonts} from '../contants';
 
-const OrderItem = ({navigation,OrderItem}) => {
+const OrderItem = ({navigation,OrderItem,key}) => {
     return (
       <TouchableOpacity
         activeOpacity={0.8}

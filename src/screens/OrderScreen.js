@@ -58,14 +58,15 @@ const OrderScreen = ({navigation}) => {
         </View>
         <View style = {{height: '90%', backgroundColor: Colors.DEFAULT_WHITE}}>
             <ScrollView style={styles.card}>
-                {listOrder?.map((item)=>{
+                {listOrder?.map((item,index)=>{
+                    const keyItem = item.orderResponseDto.orderId;
                     return(
                         <View style = {{
                             borderColor: Colors.THIRD_GREEN,
                             marginHorizontal: 15,
                             marginVertical: 5,
                             borderWidth: 1}}>
-                            <OrderItem navigation={navigation} OrderItem={item}/>
+                            <OrderItem navigation={navigation} OrderItem={item} key={index}/>
                         </View>
                     )
                     

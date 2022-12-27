@@ -87,12 +87,13 @@ const CartScreen = ({navigation,route}) =>{
                                     color: Colors.THIRD_GREY,
                                     paddingHorizontal: 5
                                 }}>{item?.shopName}</Text>
-                                {item?.listProductAndNumberDto.map((product)=>{
+                                {item?.listProductAndNumberDto.map((product,index)=>{
                                     subTotal +=
                                         product?.price *
                                         parseInt(product?.numberOfProductInCart);
                                     return (
                                         <CartItem 
+                                            key = {index}
                                             product={product} 
                                             accessToken={token}
                                             setUserId = {setUserId}

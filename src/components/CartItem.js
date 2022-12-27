@@ -5,14 +5,14 @@ import { Colors ,Fonts,Images} from '../contants';
 import { deleteItemInCart } from '../api/user_api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CartItem = ({product,accessToken,setUserId,setToken})=>{
+const CartItem = ({key,product,accessToken,setUserId,setToken})=>{
     const token = accessToken;
     const itemId = product.cartId;
     const setUserID = setUserId;
     const setAccessToken = setToken;
 
-    const image = product.imagesUrl ? product.imagesUrl[0] : '';
-    console.log(image);
+    const image = product.imagesUrl ? product.imagesUrl[0] : "";
+
     //ham xoa san pham khoi gio hang   
     const deleteProductInCart =() =>{
         deleteItemInCart(itemId,token)
@@ -28,7 +28,7 @@ const CartItem = ({product,accessToken,setUserId,setToken})=>{
     return(
         <View style={styles.cardItem}>
             <View style={styles.cardImage}>
-                <Image source={{uri: image}}
+                <Image source={{uri: image!==""? image : undefined }}
                     style={{ resizeMode: 'contain',height: "100%",width: '100%'}} />
             </View>
             <View style = {{width: '70%',flexDirection: 'column'}}>
